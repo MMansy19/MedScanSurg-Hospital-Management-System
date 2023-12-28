@@ -3,7 +3,16 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func
 
 
+
 # Define your models (tables)
+class Admin(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ssn = db.Column(db.Integer)
+    email = db.Column(db.String(100))
+    password = db.Column(db.String(50), nullable=False)
+    user_name = db.Column(db.String(50), unique=True, nullable=False)
+    full_name = db.Column(db.String(50))
+
 class Doctor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ssn = db.Column(db.Integer)
@@ -15,7 +24,15 @@ class Doctor(db.Model):
     salary = db.Column(db.Integer)
     phone = db.Column(db.String(11))
     address = db.Column(db.String(30))
-    gender = db.Column(db.String(1), CheckConstraint("gender IN ('M','F')"))
+    # gender = db.Column(db.String(1), CheckConstraint("gender IN ('M','F')"))
+    
+class Patient(db.Model):
+    patient_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+    birthdate = db.Column(db.Date)
+        
 
 class Department(db.Model):
     id = db.Column(db.Integer, primary_key=True)
