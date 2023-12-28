@@ -98,81 +98,149 @@
                 <span class="fas fa-sign-in-alt"></span>
                 <strong>Welcome! Sign in</strong>
 
-                <form action="#" method="post" class="login-form">
-                  <fieldset>
-                    <div class="form">
-                      <div class="form-row">
-                        <span class="fas fa-user"></span>
-                        <label class="form-label" for="input">Name</label>
-                        <input type="text" class="form-text" />
-                      </div>
-                      <div class="form-row">
-                        <span class="fas fa-eye"></span>
-                        <label class="form-label" for="input">Password</label>
-                        <input type="password" class="form-text" />
-                      </div>
-                      <!-- Dropdown for user type -->
-                      <div class="form-row">
-                        <select
-                          id="userType"
-                          name="userType"
-                          class="form-select"
-                        >
-                          <option value="doctor">Patient</option>
-                          <option value="patient">Doctor</option>
-                          <option value="admin">Admin</option>
-                        </select>
-                      </div>
-                      <!-- End of dropdown -->
-                      <div class="form-row bottom">
-                        <div class="form-check">
+                <form method="POST" action="{{ url_for('login') }}">
+                  <form action="#" method="post" class="login-form">
+                    <fieldset>
+                      <div class="form">
+                        <div class="form-row">
+                          <span class="fas fa-user"></span>
+                          <label class="username2" for="input">User Name</label>
                           <input
-                            type="checkbox"
-                            id="remenber"
-                            name="remenber"
-                            value="remenber"
+                            type="text"
+                            class="form-text"
+                            name="username2"
+                            required
                           />
-                          <label for="remenber"> remember me?</label>
                         </div>
-                        <a href="#url" class="forgot">forgot password?</a>
+                        <div class="form-row">
+                          <span class="fas fa-eye"></span>
+                          <label class="password2" for="input">Password</label>
+
+                          <input
+                            type="password"
+                            class="form-text"
+                            name="password2"
+                          />
+                        </div>
+                        <!-- Dropdown for user type -->
+                        <div class="form-row">
+                          <select
+                            id="userType"
+                            name="userType"
+                            class="form-select"
+                          >
+                            <option value="null">Choose user type</option>
+                            <option value="patient">Patient</option>
+                            <option value="doctor">Doctor</option>
+                            <option value="admin">Admin</option>
+                          </select>
+                        </div>
+                        <!-- End of dropdown -->
+                        <div class="form-row bottom">
+                          <div class="form-check">
+                            <input
+                              type="checkbox"
+                              id="sign"
+                              name="sign"
+                              value="sign"
+                            />
+                            <label for="sign"> Sign?</label>
+                          </div>
+                          <a href="#url" class="forgot">forgot password?</a>
+                        </div>
+                        <div class="form-row button-login">
+                          <button class="btn btn-login">
+                            Login <span class="fas fa-arrow-right"></span>
+                          </button>
+                        </div>
                       </div>
-                      <div class="form-row button-login">
-                        <button class="btn btn-login">
-                          Login <span class="fas fa-arrow-right"></span>
-                        </button>
-                      </div>
-                    </div>
-                  </fieldset>
+                    </fieldset>
+                  </form>
                 </form>
               </div>
               <!-- //login -->
 
               <!-- register -->
+              <!-- register -->
               <div class="register">
                 <span class="fas fa-user-circle"></span>
                 <strong>Create account!</strong>
-                <form action="#" method="post" class="register-form">
+                <form
+                  action="{{ url_for('login') }}"
+                  method="post"
+                  class="register-form"
+                >
                   <fieldset>
                     <div class="form">
                       <div class="form-row">
                         <span class="fas fa-user"></span>
-                        <label class="form-label" for="input">Name</label>
-                        <input type="text" class="form-text" />
+                        <label class="username1" for="input">User Name</label>
+                        <input
+                          type="text"
+                          class="form-text"
+                          name="username1"
+                          required
+                        />
                       </div>
                       <div class="form-row">
+                        <span class="fas fa-user"></span>
+                        <label class="form-label" for="fullname"
+                          >Full Name</label
+                        >
+                        <input
+                          type="text"
+                          class="form-text"
+                          name="fullname"
+                          required
+                        />
+                      </div>
+
+                      <div class="form-row">
                         <span class="fas fa-envelope"></span>
-                        <label class="form-label" for="input">E-mail</label>
-                        <input type="email" class="form-text" />
+                        <label class="form-label" for="email"></label>
+                        <input
+                          type="email"
+                          class="form-text"
+                          name="email"
+                          required
+                        />
                       </div>
                       <div class="form-row">
                         <span class="fas fa-lock"></span>
-                        <label class="form-label" for="input">Password</label>
-                        <input type="password" class="form-text" />
+                        <label class="form-label" for="password1"> </label>
+                        <input
+                          type="password"
+                          class="form-text"
+                          name="password1"
+                          required
+                        />
+
+                        <div class="form-row">
+                          <span class="fas fa-calendar"></span>
+                          <label class="form-label" for="birthdate"></label>
+                          <input
+                            type="date"
+                            class="form-text"
+                            name="birthdate"
+                            required
+                          />
+                        </div>
                       </div>
-                      <div class="form-row button-login">
-                        <button class="btn btn-login">
-                          Create <span class="fas fa-arrow-right"></span>
-                        </button>
+                      <div class="form-row bottom">
+                        <div class="form-check">
+                          <input
+                            type="checkbox"
+                            id="create"
+                            name="create"
+                            value="create"
+                          />
+                          <label for="create"> Create account?</label>
+                        </div>
+                        <div class="form-row button-login">
+                          <button class="btn btn-login">
+                            Create <span class="fas fa-arrow-right"></span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </fieldset>
