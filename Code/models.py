@@ -1,8 +1,7 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
-
-
+from datetime import datetime
 
 # Define your models (tables)
 class Admin(db.Model):
@@ -45,5 +44,10 @@ class WorksIn(db.Model):
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.id'), primary_key=True)
     date_hired = db.Column(db.Date)
     # Define relationships if needed
-
+    
+class Appointment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.patient_id'), nullable=False)
+    doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.id'), nullable=False)
+    appointment_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 # Add similar models for other tables

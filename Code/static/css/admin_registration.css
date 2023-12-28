@@ -10,9 +10,19 @@ body {
   justify-content: center;
   height: 100vh;
 }
+body {
+  font-family: Arial, sans-serif;
+}
+
+form > div {
+  flex: 1;
+  margin-right: 20px;
+}
 
 form {
   background-color: #fff;
+  display: flex;
+  flex-wrap: wrap;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
