@@ -72,17 +72,13 @@
               </div>
               <div class="collapse navbar-collapse navbar-right" id="myNavbar">
                 <ul class="nav navbar-nav">
+                  <li class=""><a href="{{ url_for('index') }}">Home</a></li>
                   <li class="">
-                    <a href="{{ url_for('views.index') }}">Home</a>
+                    <a href="{{ url_for('index') }}">Services</a>
                   </li>
+                  <li class=""><a href="{{ url_for('index') }}">Doctors</a></li>
                   <li class="">
-                    <a href="{{ url_for('views.index') }}">Services</a>
-                  </li>
-                  <li class="">
-                    <a href="{{ url_for('views.index') }}">Doctors</a>
-                  </li>
-                  <li class="">
-                    <a href="{{ url_for('views.index') }}">Testimonial</a>
+                    <a href="{{ url_for('index') }}">Testimonial</a>
                   </li>
                   <li class="active"><a href="#">Login</a></li>
                 </ul>
@@ -102,13 +98,13 @@
                 <span class="fas fa-sign-in-alt"></span>
                 <strong>Welcome! Sign in</strong>
 
-                <form method="POST" action="{{ url_for('views.login') }}">
+                <form method="POST" action="{{ url_for('login') }}">
                   <form action="#" method="post" class="login-form">
                     <fieldset>
                       <div class="form">
                         <div class="form-row">
                           <span class="fas fa-user"></span>
-                          <label class="username2" for="input">UserName</label>
+                          <label class="username2" for="input">User Name</label>
                           <input
                             type="text"
                             class="form-text"
@@ -170,7 +166,7 @@
                 <span class="fas fa-user-circle"></span>
                 <strong>Create account!</strong>
                 <form
-                  action="{{ url_for('views.login') }}"
+                  action="{{ url_for('login') }}"
                   method="post"
                   class="register-form"
                 >
