@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        color: #333;
+        text-align: center;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      li {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        margin: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        width: 200px; /* Adjust as needed */
+      }
+
+      img {
+        width: 100px; /* Adjust as needed */
+        height: 100px; /* Adjust as needed */
+        border-radius: 50%;
+        margin-bottom: 10px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+      }
+
+      label {
+        margin-bottom: 5px;
+        color: #555;
+      }
+
+      input {
+        padding: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 8px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Available Doctors</h2>
+    <ul>
+      {% for doctor in doctors %}
+      <li>
+        <img
+          src="\static\profile_pics\{{ doctor.photo }}"
+          alt="{{ doctor.full_name }} Photo"
+        />
+        <h3>{{ doctor.full_name }}</h3>
+        <p>Email: {{ doctor.email }}</p>
+        <p>Specialty: {{ doctor.specialty }}</p>
+        <form
+          method="POST"
+          action="{{ url_for('views.appointments', doctor_id=doctor.id, patient_id=patient_id) }}"
+        >
+          <input type="hidden" name="doctor_id" value="{{ doctor.id }}" />
+          <!-- Add an input field for appointment time -->
+          <label for="appointment_time">Appointment Time:</label>
+          <input type="datetime-local" name="appointment_time" required />
+
+          <button type="submit">Make Appointment</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
