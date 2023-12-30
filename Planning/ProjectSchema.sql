@@ -45,7 +45,7 @@ CREATE TABLE Scan (
     report BYTEA
 );
 
-CREATE TABLE Do(
+CREATE TABLE Do (
     scan_id INT REFERENCES Scan(scan_id),
     patient_id INT REFERENCES Patient(patient_id),
     Scan_date DATE
