@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SHC</title>
+  <meta name="description" content="SHCHospital.com">
+  <meta name="keywords" >
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Doctor.css') }}">
+
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal">
+
+
+
+</head>
+<body>
+ <section id="banner" class="banner">
+        <div class="bg-color">
+          <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+              <div class="col-md-12">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                          </button>
+                  <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='image/logo.png') }}" class="img-responsive" style="width: 140px; margin-top: -16px;"></a>
+                </div>
+                <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+                  <ul class="nav navbar-nav">
+                    <li class=""><a href="{{ url_for('index') }}">Home</a></li>
+                    <li class=""><a href="{{ url_for('index') }}">Services</a></li>
+                    <li class=""><a href="{{ url_for('index') }}">Doctors</a></li>
+                    <li class=""><a href="{{ url_for('index') }}">Testimonial</a></li>
+                    <li class="active"><a href="#">Login</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+        </nav>
+        </div>
+ </section>
+        
+      
+<section>
+<svg style="position: absolute; width: 0; height: 0; display: none;">
+    <symbol id="icon-arrow" viewBox="0 0 96 96">
+      <title>Arrow</title>
+      <path d="M39.66,13.34A8,8,0,0,0,28.34,24.66L51.69,48,28.34,71.34A8,8,0,0,0,39.66,82.66l29-29a8,8,0,0,0,0-11.31Z"/>
+    </symbol>
+  </svg>
+  
+  <div class="wrapper">
+    <div class="sticky-header">
+      <span>Calendar</span>
+    </div>
+    <div class="table">
+      <div class="headers">
+        <div class="buttons">
+          <button class="btn-left">
+            <svg><use xlink:href="#icon-arrow"></use></svg>
+          </button>
+          <button class="btn-right">
+            <svg><use xlink:href="#icon-arrow"></use></svg>
+          </button>
+        </div>
+        <div class="scroller syncscroll" name="myElements">
+          <div class="track time">
+            <div class="heading">Time</div>
+          </div>
+          <div class="track">
+            <div class="heading">Monday</div>
+          </div>
+          <div class="track">
+            <div class="heading">Tuesday</div>
+          </div>
+          <div class="track">
+            <div class="heading">Wednesday</div>
+          </div>
+          <div class="track">
+            <div class="heading">Thursday</div>
+          </div>
+          <div class="track">
+            <div class="heading">Friday</div>
+          </div>
+          <div class="track">
+            <div class="heading">Saturday</div>
+          </div>
+          <div class="track">
+            <div class="heading">Sunday</div>
+          </div>
+        </div>
+      </div>
+      <div class="tracks syncscroll" name="myElements">
+        <div class="track time">
+          <div class="entry">
+            <time>09.00</time>
+          </div>
+          <div class="entry">
+            <time>10.00</time>
+          </div>
+          <div class="entry">
+            <time>11.00</time>
+          </div>
+          <div class="entry">
+            <time>12.00</time>
+          </div>
+          <div class="entry">
+            <time>13.00</time>
+          </div>
+          <div class="entry">
+            <time>14.00</time>
+          </div>
+          <div class="entry">
+            <time>15.00</time>
+          </div>
+          <div class="entry">
+            <time>16.00</time>
+          </div>
+          <div class="entry">
+            <time>17.00</time>
+          </div>
+        </div>
+        <div class="track yellow">
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry double">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere!</p>
+            </div>
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+        </div>
+        <div class="track turq">
+          <div class="entry">
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+        </div>
+        <div class="track blue">
+  
+          <div class="entry">
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry double">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+        </div>
+        <div class="track green">
+          <div class="entry treble">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, omnis voluptas?</p>
+            </div>
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+          </div>
+        </div>
+        <div class="track purple">
+  
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry double">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+        </div>
+        <div class="track gray">
+  
+          <div class="entry">
+          </div>
+          <div class="entry">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry treble">
+            <div class="details">
+              <h3>Lorem ipsum dolor sit.</h3>
+              <p>Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+        </div>
+        <div class="track">
+  
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+          <div class="entry">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="top-of-site-pixel-anchor"></div>
+</section>
+
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+</body>
+</html>
