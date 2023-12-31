@@ -77,8 +77,10 @@ def authenticate_user(user_type, username, password):
     if user and user.password == password:
         if user_type == 'patient':
             return render_template('index.html', patient=user)
+            # return redirect(url_for('views.index', patient=user))
         elif user_type == 'doctor':
-            return render_template('doctor.html', doctor=user)
+            # return render_template('doctor.html', doctor=user)
+            return redirect(url_for('views.doctor', doctor_id=user.id))
 
     return None
 
@@ -121,6 +123,7 @@ def login():
                 request.form['email'], request.form['password1'], request.form['birthdate']
             )
             return render_template('login.html')
+     
         elif check_sign:
             user_type = request.form.get('userType')
             username = request.form.get('username2')
@@ -133,9 +136,17 @@ def login():
     return render_template('login.html')
 
 # Routes for doctor, patient, and admin
-@views.route('/doctor')
-def doctor():
-    return render_template('doctor.html')
+@views.route('/doctor/<int:doctor_id>', methods=['GET', 'POST'])
+def doctor(doctor_id):
+
+    # Retrieve all appointments for the specified doctor with patient information
+    appointments = (
+        db.session.query(Appointment, Patient)
+        .join(Patient, Appointment.patient_id == Patient.patient_id)
+        .filter(Appointment.doctor_id == doctor_id)
+        .all()
+    )
+    return render_template('doctor.html', appointments = appointments, doctor_id=doctor_id)
 
 @views.route('/patient')
 def patient():

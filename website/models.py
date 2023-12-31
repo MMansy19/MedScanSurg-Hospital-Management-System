@@ -77,4 +77,3 @@ class Appointment(db.Model):
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.patient_id'), nullable=False)
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.id'), nullable=False)
     appointment_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-

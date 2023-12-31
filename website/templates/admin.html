@@ -46,8 +46,6 @@
     <ul>
       {% for doctor in doctors %} {{ doctor.full_name }}
 
-      <!-- Your form fields for editing -->
-
       <form
         method="POST"
         action="{{ url_for('views.delete_doctor', doctor_id=doctor.id) }}"

@@ -83,6 +83,22 @@
     </section>
 
     <section>
+      <br /><br />
+      <h2>Show Appointments</h2>
+      <ul>
+        <br /><br / > {% for appointment in appointments %}
+        <il>
+          <h2>{{appointment }}</h2>
+        </il>
+        {% endfor %}
+      </ul>
+
+      <form
+        method="POST"
+        action="{{ url_for('views.doctor', appointments=appointments, doctor_id=doctor_id) }}"
+        enctype="multipart/form-data"
+      ></form>
+
       <svg style="position: absolute; width: 0; height: 0; display: none">
         <symbol id="icon-arrow" viewBox="0 0 96 96">
           <title>Arrow</title>
