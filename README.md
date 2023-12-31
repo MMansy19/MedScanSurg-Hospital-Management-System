@@ -4,6 +4,13 @@
 
 RadNetHub is a full-stack web application developed for the Radiology Department. This project aims to create a dynamic and responsive system using a combination of front-end technologies (HTML, CSS, JS) and the Python Flask web micro framework. The application integrates essential features of a Hospital Information System (HIS) tailored to the Radiology Department's needs.
 
+RadNetHub also incorporates a 'Contact Us' feature, enabling users to submit complaints or special requests effortlessly. Admins benefit from a built-in statistical analysis tool, providing valuable insights into the system's usage and performance.
+
+Embark on a journey towards a streamlined and dynamic hospital information system with RadNetHub – where health meets flexibility.
+
+
+
+
 ## Table of Contents
 
 - [Project Objectives](#project-objectives)
