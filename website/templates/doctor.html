@@ -95,7 +95,7 @@
 
       <form
         method="POST"
-        action="{{ url_for('views.doctor', appointments=appointments, doctor_id=doctor[0]) }}"
+        action="{{ url_for('views.doctor', doctor_id=doctor_id ) }}"
         enctype="multipart/form-data"
       ></form>
 

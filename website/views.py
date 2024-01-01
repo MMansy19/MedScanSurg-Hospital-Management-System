@@ -98,14 +98,15 @@ def authenticate_user(user_type, username, password):
                 password = cursor.fetchone()
                 if password is not None:
                     if password == password:
-                        return render_template('index.html')
+                        return render_template('patient.html')
 
     elif user_type == 'doctor':
-        doctor = cursor.execute('SELECT * FROM doctor WHERE user_name = %s', (username)).fetchone()
+        cursor.execute('SELECT * FROM doctor WHERE user_name = %s', (username,))
+        doctor = cursor.fetchone()
         if doctor:
-            if doctor.password ==  password:
-                return render_template('doctor.html')
-
+            if doctor[4] ==  password:
+                return redirect(url_for('views.doctor', doctor_id = doctor[0]))
+    
     elif user_type == 'admin':
         if username == 'admin_username' and password == 'admin_password':
             return render_template('admin.html')
@@ -172,10 +173,10 @@ def login():
 def doctor(doctor_id):
 
     # Retrieve all appointments for the specified doctor with patient information
-    cursor.execute(f'SELECT scan.*, patient.* FROM appointment JOIN patient ON scan.patient_id = patient.ID WHERE scan.doctor_id ={doctor_id}')
-    appointments = cursor.fetchall()
+    # cursor.execute(f'SELECT scan.*, patient.* FROM appointment JOIN patient ON scan.patient_id = patient.ID WHERE scan.doctor_id = %s',(doctor_id),)
+    # appointments = cursor.fetchall()
 
-    return render_template('doctor.html', appointments = appointments, doctor_id=doctor_id)
+    return render_template('doctor.html', doctor_id=doctor_id)
 
 @views.route('/patient')
 def patient():
