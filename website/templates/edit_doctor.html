@@ -61,25 +61,9 @@
     <h2>Edit Doctor</h2>
     <form
       method="POST"
-      action="{{ url_for('views.edit_doctor', doctor_id=doctor.id) }}"
+      action="{{ url_for('views.edit_doctor', doctor_id=doctor[0]) }}"
       enctype="multipart/form-data"
     >
-      <label for="email">Email:</label>
-      <input
-        type="email"
-        name="email"
-        value="{{ doctor.email }}"
-        required
-      /><br />
-
-      <label for="password">Password:</label>
-      <input
-        type="password"
-        name="password"
-        value="{{ doctor.password }}"
-        required
-      /><br />
-
       <label for="full_name">Full Name:</label>
       <input
         type="text"
@@ -87,7 +71,6 @@
         value="{{ doctor.full_name }}"
         required
       /><br />
-
       <label for="working_hours">Working Hours:</label>
       <input
         type="number"
@@ -119,7 +102,6 @@
         value="{{ doctor.address }}"
         required
       /><br />
-
       <label for="specialty">Specialty:</label>
       <input
         type="text"

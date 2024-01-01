@@ -48,9 +48,9 @@
 
       <form
         method="POST"
-        action="{{ url_for('views.delete_doctor', doctor_id=doctor.id) }}"
+        action="{{ url_for('views.delete_doctor', doctor_id=doctor[0] ) }}"
       >
-        <a href="{{ url_for('views.edit_doctor', doctor_id=doctor.id) }}"
+        <a href="{{ url_for('views.edit_doctor', doctor_id=doctor[0]) }}"
           >Edit</a
         >
         <button type="submit">Delete</button>

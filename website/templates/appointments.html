@@ -82,9 +82,9 @@
         <p>Specialty: {{ doctor.specialty }}</p>
         <form
           method="POST"
-          action="{{ url_for('views.appointments', doctor_id=doctor.id, patient_id=patient_id) }}"
+          action="{{ url_for('views.appointments', doctor_id=doctor.ID, patient_id=patient_id) }}"
         >
-          <input type="hidden" name="doctor_id" value="{{ doctor.id }}" />
+          <input type="hidden" name="doctor_id" value="{{ doctor.ID }}" />
           <!-- Add an input field for appointment time -->
           <label for="appointment_time">Appointment Time:</label>
           <input type="datetime-local" name="appointment_time" required />
