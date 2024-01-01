@@ -182,7 +182,8 @@ def appointments():
 def edit_doctor(doctor_id):
     # Find the doctor in the database
     # doctor = Doctor.query.get(doctor_id)
-
+    cursor.execute('SELECT * FROM doctor WHERE id = %s', (doctor_id,))
+    doctor=cursor.fetchone()
     if request.method == 'POST':
         # Update the doctor's information
         # doctor.email = request.form['email']
@@ -198,7 +199,7 @@ def edit_doctor(doctor_id):
         cursor.execute('UPDATE doctor SET working_hours = %s WHERE id = %s', (request.form['working_hours'], doctor_id))
         cursor.execute('UPDATE doctor SET salary = %s WHERE id = %s', (request.form['salary'], doctor_id))
         cursor.execute('UPDATE doctor SET phone = %s WHERE id = %s', (request.form['phone'], doctor_id))
-        cursor.execute('UPDATE doctor SET address = %s WHERE id = %s', (request.request.form['address'], doctor_id))
+        cursor.execute('UPDATE doctor SET address = %s WHERE id = %s', (request.form['address'], doctor_id))
         # Commit the changes to the database
         db.session.commit()
 
@@ -209,15 +210,15 @@ def edit_doctor(doctor_id):
 
 @app.route('/delete_doctor/<int:doctor_id>', methods=['POST'])
 def delete_doctor(doctor_id):
-    # Find the doctor in the database
-    doctor = cursor.execute('SELECT * FROM doctor WHERE id = %s', (doctor_id,)).fetchone()
-
-    # Remove the doctor from the database
-    # db.session.delete(doctor)
-    cursor.execute('DELETE FROM doctor WHERE id = %s', (doctor_id,))
-    db.session.commit()
-
-    return redirect(url_for('admin'))
+        # Find the doctor in the database
+        cursor.execute('SELECT * FROM doctor WHERE id = %s', (doctor_id,))
+        doctor = cursor.fetchone()
+        if doctor:
+            cursor.execute('DELETE FROM doctor WHERE id = %s', (doctor_id,))
+            db.session.commit()
+        # Remove the doctor from the database
+        # db.session.delete(doctor)
+        return redirect(url_for('admin'))
 
 
 if __name__ == '__main__':
