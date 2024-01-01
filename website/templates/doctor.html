@@ -84,21 +84,84 @@
 
     <section>
       <br /><br />
-      <h2>Show Appointments</h2>
-      <ul>
-        <br /><br / > {% for appointment in appointments %}
-        <il>
-          <h2>{{appointment }}</h2>
-        </il>
-        {% endfor %}
-      </ul>
 
       <form
         method="POST"
-        action="{{ url_for('views.doctor', doctor_id=doctor_id ) }}"
-        enctype="multipart/form-data"
-      ></form>
+        action="{{ url_for('views.doctor', doctor_id=doctor[0]) }}"
+      >
+        <h2>Doctor Profile</h2>
+        <a
+          href="{{ url_for('views.edit_doctor', doctor_id=doctor[0]) }}"
+          target="_blank"
+          >Edit Profile</a
+        >
 
+        <!-- Existing doctor information fields -->
+        <label for="full_name">Full Name:</label>
+        <input
+          type="text"
+          id="full_name"
+          name="full_name"
+          value="{{ doctor[1] }}"
+          required
+        />
+        <!-- Add other fields for doctor information -->
+
+        <!-- New fields for scan information -->
+        <h3>Scans</h3>
+        <label for="scan_price">Scan Price:</label>
+        <input
+          type="number"
+          id="scan_price"
+          name="scan_price"
+          min="0"
+          required
+        />
+
+        <label for="scan_machine">Scan Machine:</label>
+        <!-- Add machines for scan please -->
+        <select
+          id="scan_machine"
+          name="scan_machine"
+          class="form-select"
+          required
+          onchange="updateTestTypes()"
+        >
+          <option value=""></option>
+          <option value=""></option>
+          <option value=""></option>
+          <option value=""></option>
+          <option value=""></option>
+        </select>
+
+        <label for="scan_category">Scan Category:</label>
+        <!-- Add categories for scan please -->
+        <select
+          id="scan_category"
+          name="scan_category"
+          class="form-select"
+          required
+          onchange="updateTestTypes()"
+        >
+          <option value=""></option>
+          <option value=""></option>
+          <option value=""></option>
+          <option value=""></option>
+          <option value=""></option>
+        </select>
+
+        <label for="scan_report">Scan Report:</label>
+        <textarea
+          id="scan_report"
+          name="scan_report"
+          rows="4"
+          required
+        ></textarea>
+
+        <!-- Add other fields for scan information if needed -->
+
+        <button type="submit">Save Changes</button>
+      </form>
       <svg style="position: absolute; width: 0; height: 0; display: none">
         <symbol id="icon-arrow" viewBox="0 0 96 96">
           <title>Arrow</title>

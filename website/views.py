@@ -21,12 +21,14 @@ database_session = psycopg2.connect(
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 # Utility function to save a picture
-def save_picture(form_picture):
+def save_picture(form_picture,type=0):
     if form_picture and form_picture.filename:
         random_hex = secrets.token_hex(8)
         _, f_ext = os.path.splitext(form_picture.filename)
         picture_fn = random_hex + f_ext
-        picture_path = os.path.join(views.root_path, 'static/profile_pics', picture_fn)
+        if type==0:
+            picture_path = os.path.join(views.root_path, 'static/profile_pics', picture_fn)
+        picture_path = os.path.join(views.root_path, 'static/scans', picture_fn)
 
         output_size = (125, 125)
         i = Image.open(form_picture)
@@ -36,56 +38,6 @@ def save_picture(form_picture):
     else:   
         return 'default.jpg'
 
-
-class EditProfileForm(FlaskForm):
-    full_name = StringField('Full Name', validators=[DataRequired(), Length(max=30)])
-    password = StringField('Password', validators=[DataRequired(), Length(max=30)])
-    specialty = StringField('Specialty')
-    salary = IntegerField('Salary', validators=[DataRequired()])
-    working_hours = IntegerField('Working Hours', validators=[DataRequired()])
-    phone = StringField('Phone', validators=[DataRequired(), Length(max=15)])
-    address = StringField('Address', validators=[DataRequired(), Length(max=100)])
-    photo = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
-
-    def populate_from_doctor(self, doctor_id):
-        
-        # Update the Doctor information in the database
-        cursor.execute("""
-            UPDATE doctor
-            SET 
-                full_name = %s,
-                working_hours = %s,
-                salary = %s,
-                phone = %s,
-                address = %s
-            WHERE id = %s;
-        """, (self.full_name.data,
-              self.working_hours.data, self.salary.data, self.phone.data,
-              self.address.data, int(doctor_id)))
-        database_session.commit()
-    def update_doctor(self, doctor_id, photo_file):
-
-        if photo_file:
-            self.photo.data = save_picture(photo_file)    
-        
-        # Update the Doctor information in the database
-        cursor.execute("""
-            UPDATE doctor
-            SET 
-                full_name = %s,
-                specialty = %s,
-                salary = %s,
-                working_hours = %s,
-                phone = %s,
-                address = %s,
-                photo = %s
-            WHERE id = %s;
-        """, (self.full_name.data, self.specialty.data,
-              self.salary.data, self.working_hours.data, self.phone.data,
-              self.address.data, self.photo.data,(doctor_id),))
-
-        database_session.commit()
-        
 # Utility function to create a new patient
 def create_patient(username, name, email, password, birthdate):
     birthdate = datetime.strptime(birthdate, '%Y-%m-%d').date()
@@ -168,15 +120,55 @@ def login():
 
     return render_template('login.html')
 
-# Routes for doctor, patient, and admin
-@views.route('/doctor/<int:doctor_id>', methods=['GET', 'POST'])
-def doctor(doctor_id):
-
-    # Retrieve all appointments for the specified doctor with patient information
     # cursor.execute(f'SELECT scan.*, patient.* FROM appointment JOIN patient ON scan.patient_id = patient.ID WHERE scan.doctor_id = %s',(doctor_id),)
     # appointments = cursor.fetchall()
 
-    return render_template('doctor.html', doctor_id=doctor_id)
+@views.route('/doctor/<int:doctor_id>', methods=['GET', 'POST'])
+def doctor(doctor_id):
+    if request.method == 'POST':
+        full_name = request.form.get('full_name')
+        working_hours = int(request.form.get('working_hours')) if request.form.get('working_hours') else 0
+        salary = int(request.form.get('salary')) if request.form.get('salary') else 0
+        phone = request.form.get('phone')[:11] if request.form.get('phone') else ''
+        address = request.form.get('address')
+        specialty = request.form.get('specialty')
+        gender = request.form.get('gender')
+        
+        # Update the doctor's profile in the database
+        cursor.execute('''
+            UPDATE doctor
+            SET full_name = %s, working_hours = %s, salary = %s, phone = %s, address = %s,
+                specialty = %s, gender = %s
+            WHERE ID = %s
+        ''', (full_name, working_hours, salary, phone, address, specialty, gender, doctor_id))
+        database_session.commit()
+        
+        # Fetch the scans from the form
+        scan_price = int(request.form.get('scan_price')) if request.form.get('scan_price') else 0
+        scan_machine = request.form.get('scan_machine')
+        scan_category = request.form.get('scan_category')
+        scan_report = request.form.get('scan_report')
+
+        # Insert the scan into the Scan table
+        cursor.execute('''
+            INSERT INTO Scan (doctor_id, price, machine, category, report)
+            VALUES (%s, %s, %s, %s, %s)
+        ''', (doctor_id, scan_price, scan_machine, scan_category, scan_report))
+        database_session.commit()
+
+        return redirect(url_for('views.doctor', doctor_id=doctor_id))
+
+    # Rollback the current transaction
+    database_session.rollback()
+    
+    # Fetch the doctor's information for rendering the form
+    cursor.execute('SELECT * FROM doctor WHERE ID = %s', (doctor_id,))
+    doctor = cursor.fetchone()
+    
+    cursor.execute('SELECT * FROM Scan WHERE doctor_id = %s', (doctor_id,))
+    scans = cursor.fetchall()
+
+    return render_template('doctor.html', doctor=doctor, scans=scans)
 
 @views.route('/patient')
 def patient():
@@ -214,18 +206,29 @@ def edit_doctor(doctor_id):
     database_session.rollback()
     cursor.execute('SELECT * FROM doctor WHERE id = %s', (doctor_id,))
     doctor=cursor.fetchone()
-    form = EditProfileForm()
 
-    if request.method == 'GET':
-        form.populate_from_doctor(doctor_id)
-        cursor.execute(f'SELECT photo FROM doctor WHERE ID = {doctor_id}') 
-        photo=cursor.fetchone()
-        photo = url_for('static', filename=f'profile_pics/{photo}')
-        return render_template('edit_doctor.html', photo=photo, form=form, doctor=doctor)
+    if request.method == 'POST':
+        full_name = request.form.get('full_name')
+        working_hours = int(request.form.get('working_hours')) if request.form.get('working_hours') else 0
+        salary = int(request.form.get('salary')) if request.form.get('salary') else 0
+        phone = request.form.get('phone')[:11] if request.form.get('phone') else ''
+        address = request.form.get('address')
+        specialty = request.form.get('specialty')
+        gender = request.form.get('gender')
 
-    form.update_doctor(doctor, request.files.get('photo'))
-    db.session.commit()
-    return redirect(url_for('views.admin'))
+        new_photo = request.files.get('photo')
+        photo = save_picture(new_photo)
+
+        # Update the doctor's profile in the database
+        cursor.execute('''
+            UPDATE doctor
+            SET full_name = %s, working_hours = %s, salary = %s, phone = %s, address = %s,
+                specialty = %s, gender = %s, photo = %s
+            WHERE ID = %s
+        ''', (full_name, working_hours, salary, phone, address, specialty, gender, photo, doctor_id))
+        database_session.commit()
+        
+    return render_template('edit_doctor.html', doctor=doctor)
 
 # Route for deleting a doctor
 @views.route('/delete_doctor/<int:doctor_id>', methods=['POST'])

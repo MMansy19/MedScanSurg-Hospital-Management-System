@@ -50,7 +50,7 @@
         method="POST"
         action="{{ url_for('views.delete_doctor', doctor_id=doctor[0] ) }}"
       >
-        <a href="{{ url_for('views.edit_doctor', doctor_id=doctor[0]) }}"
+        <a href="{{ url_for('views.edit_doctor', doctor_id=doctor[0]) }} "target="_blank""
           >Edit</a
         >
         <button type="submit">Delete</button>
