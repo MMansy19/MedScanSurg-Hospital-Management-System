@@ -59,16 +59,20 @@
               </div>
               <div class="collapse navbar-collapse navbar-right" id="myNavbar">
                 <ul class="nav navbar-nav">
-                  <li class=""><a href="{{ url_for('index') }}">Home</a></li>
                   <li class="">
-                    <a href="{{ url_for('index') }}">Services</a>
+                    <a href="{{ url_for('views.index') }}">Home</a>
                   </li>
-                  <li class=""><a href="{{ url_for('index') }}">Doctors</a></li>
                   <li class="">
-                    <a href="{{ url_for('index') }}">Testimonial</a>
+                    <a href="{{ url_for('views.index') }}">Services</a>
+                  </li>
+                  <li class="">
+                    <a href="{{ url_for('views.index') }}">Doctors</a>
+                  </li>
+                  <li class="">
+                    <a href="{{ url_for('views.index') }}">Testimonial</a>
                   </li>
                   <li class="active">
-                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('views.login') }}">Login</a>
                   </li>
                 </ul>
               </div>
@@ -79,6 +83,83 @@
     </section>
 
     <section>
+      <br /><br />
+
+      <form
+        method="POST"
+        action="{{ url_for('views.doctor', doctor_id=doctor[0]) }}"
+        enctype="multipart/form-data"
+      >
+        <h2>Doctor Profile</h2>
+        <br /><br />
+        <a
+          id="edit"
+          href="{{ url_for('views.edit_doctor', doctor_id=doctor[0]) }}"
+          target="_blank"
+          >Edit Profile</a
+        >
+
+        <br />
+        <!-- Existing doctor information fields -->
+        <h3>{{ doctor[5] }}</h3>
+        <h3>Working Hours: {{ doctor[6] }}</h3>
+
+        <!-- Add other fields for doctor information -->
+
+        <!-- New fields for scan information -->
+        <h3>Scans</h3>
+        <label for="scan_price">Scan Price:</label>
+        <input
+          type="number"
+          id="scan_price"
+          name="scan_price"
+          min="0"
+          required
+        />
+
+        <label for="scan_machine">Scan Machine:</label>
+        <select
+          id="scan_machine"
+          name="scan_machine"
+          class="form-select"
+          required
+          onchange="updateTestTypes()"
+        >
+          <option value="mri">MRI Scanner</option>
+          <option value="ct">CT Scanner</option>
+          <option value="ultrasound">Ultrasound Machine</option>
+          <option value="xray">X-ray Machine</option>
+          <option value="petct">PET-CT Scanner</option>
+        </select>
+
+        <label for="scan_category">Scan Category:</label>
+        <select
+          id="scan_category"
+          name="scan_category"
+          class="form-select"
+          required
+          onchange="updateTestTypes()"
+        >
+          <option value="brain">Brain Scan</option>
+          <option value="abdomen">Abdomen Scan</option>
+          <option value="cardiac">Cardiac Scan</option>
+          <option value="orthopedic">Orthopedic Scan</option>
+          <option value="oncology">Oncology Scan</option>
+        </select>
+        <label for="photo">Scan Report Image:</label>
+        <br />
+        <input type="file" name="photo" />
+
+        <button type="submit">Submit</button>
+      </form>
+      <ul>
+        {%for scan in scans%}
+        <li>
+          <img src="\static\scans\{{ scan[5] }}" alt="Scan Photo""
+          style="max-width: 300px; max-height: 300px" />
+        </li>
+        {% endfor %}
+      </ul>
       <svg style="position: absolute; width: 0; height: 0; display: none">
         <symbol id="icon-arrow" viewBox="0 0 96 96">
           <title>Arrow</title>

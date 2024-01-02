@@ -10,6 +10,8 @@ CREATE TABLE Doctor (
     phone VARCHAR(11),
     address VARCHAR(30),
     gender VARCHAR(1),
+    photo VARCHAR(100),
+    speciality VARCHAR(100)
     CONSTRAINT chk_gender CHECK(gender IN ('M','F'))
 );
 
@@ -27,12 +29,12 @@ CREATE TABLE WorksIn(
 );
 
 CREATE TABLE Patient (
-    patient_id SERIAL PRIMARY KEY,
+    ID SERIAL PRIMARY KEY,
     SSN VARCHAR(14),
     email VARCHAR(100) NOT NULL,
     username VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL ,
-    fullname VARCHAR(100),
+    full_name VARCHAR(100),
     birthdate DATE
 );
 
@@ -42,13 +44,8 @@ CREATE TABLE Scan (
     price int,
     machine VARCHAR(100)  NOT NULL,
     category VARCHAR(100)  NOT NULL,
-    report BYTEA
-);
-
-CREATE TABLE Do(
-    scan_id INT REFERENCES Scan(scan_id),
-    patient_id INT REFERENCES Patient(patient_id),
-    Scan_date DATE
+    Scan_date DATE,
+    photo VARCHAR(100)
 );
 
 CREATE TABLE Surgery (
@@ -59,13 +56,4 @@ CREATE TABLE Surgery (
     date DATE,
     room_number INT,
     duration INT
-);
-
-CREATE TABLE Admin(
-    ID SERIAL PRIMARY KEY,
-    SSN INT,
-    email VARCHAR(100),
-    password VARCHAR(50) NOT NULL ,
-    user_name VARCHAR(50) UNIQUE NOT NULL ,
-    full_name VARCHAR(50)
 );

@@ -12,8 +12,13 @@
   </head>
 
   <body>
-    <h2>Admin Registration</h2>
-    <form method="POST" action="{{ url_for('admin') }}" class="two-columns">
+    <h2>DoctorRegistration</h2>
+
+    <form
+      method="POST"
+      action="{{ url_for('views.admin') }}"
+      class="two-columns"
+    >
       <div>
         <label for="ssn">SSN:</label>
         <input type="text" name="ssn" required /><br />
@@ -26,13 +31,14 @@
       </div>
 
       <div>
-        <label for="userName">Username:</label>
-        <input type="text" name="userName" required /><br />
+        <label for="user_name">Username:</label>
+        <input type="text" name="user_name" required /><br />
 
-        <label for="fullName">Full Name:</label>
-        <input type="text" name="fullName" required /><br />
+        <label for="full_name">Full Name:</label>
+        <input type="text" name="full_name" required /><br />
 
         <button type="submit">Add Doctor</button>
+        <h4 class=""><a href="{{ url_for('views.login') }}">Go to Login</a></h4>
       </div>
     </form>
 
@@ -40,13 +46,13 @@
     <ul>
       {% for doctor in doctors %} {{ doctor.full_name }}
 
-      <!-- Your form fields for editing -->
-
       <form
         method="POST"
-        action="{{ url_for('delete_doctor', doctor_id=doctor.id) }}"
+        action="{{ url_for('views.delete_doctor', doctor_id=doctor[0] ) }}"
       >
-        <a href="{{ url_for('edit_doctor', doctor_id=doctor.id) }}">Edit</a>
+        <a href="{{ url_for('views.edit_doctor', doctor_id=doctor[0]) }} "target="_blank""
+          >Edit</a
+        >
         <button type="submit">Delete</button>
       </form>
       {% endfor %}

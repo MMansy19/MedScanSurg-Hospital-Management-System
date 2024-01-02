@@ -61,37 +61,21 @@
     <h2>Edit Doctor</h2>
     <form
       method="POST"
-      action="{{ url_for('edit_doctor', doctor_id=doctor.id) }}"
+      action="{{ url_for('views.edit_doctor', doctor_id=doctor[0]) }}"
+      enctype="multipart/form-data"
     >
-      <label for="email">Email:</label>
-      <input
-        type="email"
-        name="email"
-        value="{{ doctor.email }}"
-        required
-      /><br />
-
-      <label for="password">Password:</label>
-      <input
-        type="password"
-        name="password"
-        value="{{ doctor.password }}"
-        required
-      /><br />
-
-      <label for="fullName">Full Name:</label>
+      <label for="full_name">Full Name:</label>
       <input
         type="text"
-        name="fullName"
-        value="{{ doctor.full_name }}"
+        name="full_name"
+        value="{{ doctor[5] }}"
         required
       /><br />
-
       <label for="working_hours">Working Hours:</label>
       <input
         type="number"
         name="working_hours"
-        value="{{ doctor.working_hours }}"
+        value="{{ doctor[6] }}"
         required
       /><br />
 
@@ -99,7 +83,7 @@
       <input
         type="number"
         name="salary"
-        value="{{ doctor.salary }}"
+        value="{{ doctor[7] }}"
         required
       /><br />
 
@@ -107,7 +91,7 @@
       <input
         type="text"
         name="phone"
-        value="{{ doctor.phone }}"
+        value="{{ doctor[8] }}"
         required
       /><br />
 
@@ -115,9 +99,34 @@
       <input
         type="text"
         name="address"
-        value="{{ doctor.address }}"
+        value="{{ doctor[9] }}"
         required
       /><br />
+      <label for="specialty">Specialty:</label>
+      <input
+        type="text"
+        name="specialty"
+        value="{{ doctor[10] }}"
+        required
+      /><br />
+          <label for="gender">Gender:</label>
+    <select name="gender" required>
+        <option value="M" {% if doctor[11] == 'M' %}selected{% endif %}>Male</option>
+        <option value="F" {% if doctor[11] == 'F' %}selected{% endif %}>Female</option>
+    </select>
+    <br>
+
+      <label for="photo">Update Profile Picture:</label>
+      <input type="file" name="photo" accept="image/*" /><br />
+
+      <img
+          src="\static\profile_pics\{{ doctor[12] }}"
+          alt="{{ doctor[5] }}'s Photo"
+        
+        src="{{ photo }}"
+        alt="Current Profile Picture"
+        style="max-width: 100px; max-height: 100px"
+      />
 
       <button type="submit">Save Changes</button>
     </form>

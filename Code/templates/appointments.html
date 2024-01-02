@@ -11,19 +11,32 @@
 
       h2 {
         color: #333;
+        text-align: center;
       }
 
       ul {
         list-style-type: none;
         padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
       }
 
       li {
         background-color: #fff;
         border: 1px solid #ddd;
-        margin-bottom: 10px;
+        margin: 10px;
         padding: 10px;
         border-radius: 5px;
+        text-align: center;
+        width: 200px; /* Adjust as needed */
+      }
+
+      img {
+        width: 100px; /* Adjust as needed */
+        height: 100px; /* Adjust as needed */
+        border-radius: 50%;
+        margin-bottom: 10px;
       }
 
       form {
@@ -60,13 +73,21 @@
     <ul>
       {% for doctor in doctors %}
       <li>
-        {{ doctor.full_name }}
-        <form method="POST" action="{{ url_for('appointments') }}">
-          <input type="hidden" name="doctor_id" value="{{ doctor.id }}" />
+        <img
+          src="\static\profile_pics\{{ doctor.photo }}"
+          alt="{{ doctor.full_name }} Photo"
+        />
+        <h3>{{ doctor.full_name }}</h3>
+        <p>Email: {{ doctor.email }}</p>
+        <p>Specialty: {{ doctor.specialty }}</p>
+        <form
+          method="POST"
+          action="{{ url_for('views.appointments', doctor_id=doctor.ID, patient_id=patient_id) }}"
+        >
+          <input type="hidden" name="doctor_id" value="{{ doctor.ID }}" />
           <!-- Add an input field for appointment time -->
           <label for="appointment_time">Appointment Time:</label>
           <input type="datetime-local" name="appointment_time" required />
-          <button type="submit">Make Appointment</button>
         </form>
       </li>
       {% endfor %}

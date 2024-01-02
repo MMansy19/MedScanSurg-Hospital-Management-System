@@ -1,84 +1,100 @@
-# RadNetHub: Healing Radiance Repository
+# Radiology Department Database Project 🌐💻
+
+This project is a Flask-based web application for managing a Radiology Department database. It allows users to login as patients, doctors, or administrators, schedule appointments, and manage user profiles.
 
 ## Project Overview
 
-RadNetHub is a full-stack web application developed for the Radiology Department. This project aims to create a dynamic and responsive system using a combination of front-end technologies (HTML, CSS, JS) and the Python Flask web micro framework. The application integrates essential features of a Hospital Information System (HIS) tailored to the Radiology Department's needs.
+**MedRad Connect** is a comprehensive full-stack web application designed to cater to the unique needs of the Radiology Department. Developed using front-end technologies such as HTML, CSS, and JS, coupled with the Python Flask web micro framework, this project aims to provide a dynamic and responsive system. The application seamlessly integrates essential features of a Hospital Information System (HIS), specifically tailored for the Radiology Department.
 
 ## Table of Contents
 
-- [Project Objectives](#project-objectives)
-- [Main Requirements](#main-requirements)
-- [Specific Requirements](#specific-requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+- [Radiology Department Database Project 🌐💻](#radiology-department-database-project-)
+  - [Project Overview](#project-overview)
+  - [Table of Contents](#table-of-contents)
+  - [Running the Flask App](#-running-the-flask-app)
+  - [Project Structure](#-project-structure)
+  - [Editing a Doctor's Profile](#-editing-a-doctors-profile)
+  - [Adding a New Doctor](#-adding-a-new-doctor)
+  - [Managing Appointments](#-managing-appointments)
+  - [Contact](#-contact)
+  - [Video Presentation](#-video-presentation)
 
-## Project Objectives
+## 🚀 Running the Flask App
 
-1. **Learn Front End Technologies (HTML, CSS, JS):**
-   - Create an intuitive and user-friendly interface for seamless interaction.
+1. Open a terminal and navigate to the project directory:
 
-2. **Learn Python Flask Web Micro Framework:**
-   - Implement the backend using Flask for a robust and scalable web application.
+   ```bash
+   cd C:\Radiology-Department-Database-Project
+   ```
 
-3. **Hospital Information Systems (HIS):**
-   - Incorporate essential HIS features tailored to the Radiology Department.
+2. If you don't have a virtual environment, create one:
 
-4. **ERD and SQL DBMS:**
-   - Develop a comprehensive Entity-Relationship Diagram and corresponding SQL scripts.
+   ```bash
+   virtualenv venv
+   ```
 
-## Main Requirements
+3. Activate the virtual environment:
 
-1. **Choose a Hospital Department:**
-   - Radiology
+   ```bash
+   venv\Scripts\activate
+   ```
 
-2. **Build a Full Stack Web Application:**
-   - Create a dynamic and responsive application utilizing HTML, CSS, JS, and Python Flask.
+4. Install the required packages:
 
-3. **Design Implementation:**
-   - Implement an intuitive design focusing on user experience and interaction.
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## Specific Requirements
+5. Run the Flask app:
 
-1. **User Roles and Permissions:**
-   - Define different user categories (Doctors, Patients, Admin) with distinct functionalities.
+   ```bash
+   python app.py
+   ```
 
-2. **File Uploads and Static Files:**
-   - Allow users to upload patient scans and utilize static files for seamless data handling.
+## 📂 Project Structure
 
-3. **User Authentication:**
-   - Implement secure sign-up and sign-in forms for user authentication.
+- `website`: Contains the main Flask application.
+  - `__init__.py`: Initializes the Flask app.
+  - `models.py`: Defines the database models.
+  - `views.py`: Contains the main views and routes.
+  - ...
 
-4. **Responsive Theme:**
-   - Utilize a responsive theme, such as Bootstrap, ensuring optimal viewing from mobile devices.
+- `static`: Contains static files (CSS, JS, images).
+  - `profile_pics`: Stores user profile pictures.
 
-5. **Calendar Integration:**
-   - Synchronize the application with Google Calendar or any calendar system for doctors' scheduling.
+- `templates`: Contains HTML templates for rendering pages.
+  - `admin.html`: Admin dashboard.
+  - `appointments.html`: Appointments page.
+  - `doctor.html`: Doctor dashboard.
+  - `index.html`: Home page.
+  - `login.html`: Login and registration page.
+  - `patient.html`: Patient dashboard.
+  - ...
 
-6. **Contact Us Forms:**
-   - Include a contact form for complaints or special requests, enhancing user engagement.
+- `instance`: Contains instance-specific configuration files.
 
-7. **Statistical Analysis:**
-   - Provide statistical analysis tools for admin entry to extract valuable insights.
+- `database.db`: SQLite database file.
 
+- `ER_model.jpg`: Entity-Relationship model image.
 
-## Installation
+- `Planning`: Directory containing planning documents.
 
-Describe the installation steps here.
+## ✏️ Editing a Doctor's Profile
 
-## Usage
+To edit a doctor's profile, visit the `/edit_doctor/<doctor_id>` route. The admin can manage doctors' information, including their profile pictures.
 
-Provide instructions on how to use the application.
+## ➕ Adding a New Doctor
 
-## Contributing
+To add a new doctor, go to the `/admin` route and fill in the required information in the form.
 
-If you would like to contribute to the project, follow these guidelines.
+## 📅 Managing Appointments
 
-## License
+Patients can schedule appointments by visiting the `/appointments/<patient_id>` route. Doctors and administrators can view and manage appointments.
 
-This project is licensed under the [LICENSE NAME] License - see the [LICENSE.md](LICENSE.md) file for details. (Replace [LICENSE NAME] with the actual license name.)
+## 📧 Contact
 
----
+For inquiries or issues, please contact [Mahmoud Mansy] at [mmansy@egmail.com].
 
-Feel free to replace the placeholders and add more details based on your project's specifics.
+## 🎥 Video Presentation
+
+[![Radiology Department Database Project Presentation](./images/video_thumbnail.png)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
