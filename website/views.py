@@ -52,7 +52,6 @@ def save_scan(form_picture):
     else:
         return 'default.jpg'
 
-
 # Utility function to create a new patient
 def create_patient(username, name, email, password, birthdate):
     birthdate = datetime.strptime(birthdate, '%Y-%m-%d').date()
@@ -104,11 +103,10 @@ def create_doctor(ssn, email, password, user_name, full_name):
 
 # Main route for index
 @views.route('/', methods=['GET', 'POST'])
-@login_required
-def index(patient_id):
-    cursor.execute(f'SELECT * FROM patient WHERE ID = {patient_id};')
-    patient = cursor.fetchone()
-    return render_template('index.html', patient_id=patient_id)
+def index():
+    # cursor.execute(f'SELECT * FROM patient WHERE ID = {patient_id};')
+    # patient = cursor.fetchone()
+    return render_template('index.html')
 
 # Route for login
 @views.route('/login', methods=['GET', 'POST'])

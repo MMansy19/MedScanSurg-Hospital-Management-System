@@ -10,7 +10,8 @@ CREATE TABLE Doctor (
     phone VARCHAR(11),
     address VARCHAR(30),
     gender VARCHAR(1),
-    photo VARCHAR(100)
+    photo VARCHAR(100),
+    speciality VARCHAR(100)
     CONSTRAINT chk_gender CHECK(gender IN ('M','F'))
 );
 
@@ -43,13 +44,8 @@ CREATE TABLE Scan (
     price int,
     machine VARCHAR(100)  NOT NULL,
     category VARCHAR(100)  NOT NULL,
+    Scan_date DATE,
     photo VARCHAR(100)
-);
-
-CREATE TABLE Do(
-    scan_id INT REFERENCES Scan(scan_id),
-    patient_id INT REFERENCES Patient(patient_id),
-    Scan_date DATE
 );
 
 CREATE TABLE Surgery (
