@@ -21,22 +21,37 @@ database_session = psycopg2.connect(
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 # Utility function to save a picture
-def save_picture(form_picture,type=0):
+def save_picture(form_picture):
     if form_picture and form_picture.filename:
         random_hex = secrets.token_hex(8)
         _, f_ext = os.path.splitext(form_picture.filename)
         picture_fn = random_hex + f_ext
-        if type==0:
-            picture_path = os.path.join(views.root_path, 'static/profile_pics', picture_fn)
-        picture_path = os.path.join(views.root_path, 'static/scans', picture_fn)
+        picture_path = os.path.join(views.root_path, 'static/profile_pics', picture_fn)
 
         output_size = (125, 125)
         i = Image.open(form_picture)
         i.thumbnail(output_size)
         i.save(picture_path)
+
         return picture_fn
-    else:   
+    else:
+        return 'default.jpg'  
+def save_scan(form_picture):
+    if form_picture and form_picture.filename:
+        random_hex = secrets.token_hex(8)
+        _, f_ext = os.path.splitext(form_picture.filename)
+        picture_fn = random_hex + f_ext
+        picture_path = os.path.join(views.root_path, 'static/scans', picture_fn)
+
+        output_size = (300, 300)  # Adjust the size as needed
+        i = Image.open(form_picture)
+        i.thumbnail(output_size)
+        i.save(picture_path)
+
+        return picture_fn
+    else:
         return 'default.jpg'
+
 
 # Utility function to create a new patient
 def create_patient(username, name, email, password, birthdate):
@@ -147,13 +162,13 @@ def doctor(doctor_id):
         scan_price = int(request.form.get('scan_price')) if request.form.get('scan_price') else 0
         scan_machine = request.form.get('scan_machine')
         scan_category = request.form.get('scan_category')
-        scan_report = request.form.get('scan_report')
-
-        # Insert the scan into the Scan table
+        new_scan_photo = request.files.get('photo')
+        scan_photo = save_scan(new_scan_photo)
+        
         cursor.execute('''
-            INSERT INTO Scan (doctor_id, price, machine, category, report)
+            INSERT INTO Scan (doctor_id, price, machine, category, photo)
             VALUES (%s, %s, %s, %s, %s)
-        ''', (doctor_id, scan_price, scan_machine, scan_category, scan_report))
+        ''', (doctor_id, scan_price, scan_machine, scan_category, scan_photo))
         database_session.commit()
 
         return redirect(url_for('views.doctor', doctor_id=doctor_id))
@@ -187,20 +202,6 @@ def admin():
     doctors = cursor.fetchall()
     return render_template('admin.html', doctors=doctors)
 
-# Route for appointments
-# @views.route('/appointments/<int:patient_id>', methods=['GET', 'POST'])
-# def appointments(patient_id):
-#     if request.method == 'POST':
-#         create_appointment(
-#             patient_id, request.form.get('doctor_id'), request.form.get('appointment_time')
-#         )
-#         return redirect(url_for('views.appointments', patient_id=patient_id))
-
-#         cursor.execute('SELECT * FROM doctor')
-#         doctors=cursor.fetchone()
-#         return render_template('appointments.html', doctors=doctors, patient_id=patient_id)
-
-# Route for editing doctor profile
 @views.route('/edit_doctor/<int:doctor_id>', methods=['GET', 'POST'])
 def edit_doctor(doctor_id):
     database_session.rollback()
@@ -233,13 +234,8 @@ def edit_doctor(doctor_id):
 # Route for deleting a doctor
 @views.route('/delete_doctor/<int:doctor_id>', methods=['POST'])
 def delete_doctor(doctor_id):
-    # doctor = Doctor.query.get(doctor_id)
-    # appointments = Appointment.query.filter_by(doctor_id=doctor_id).all()
-
-    # for appointment in appointments:
-    #     db.session.delete(appointment)
-    
     cursor.execute('DELETE FROM doctor WHERE id = %s', (doctor_id,))
     database_session.commit()
     return redirect(url_for('views.admin'))
+
 
