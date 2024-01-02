@@ -50,6 +50,7 @@
               <img src="{{ url_for('static', filename='image/logo.png') }}" class="img-responsive" style="width: 200px; height: 200px;">
             </div>
             <div class="banner-text text-center">
+              
               <h1 class="white">HealthCare, Never Been Easier!</h1>
               <a href="#radiology" class="btn btn-appoint">Make a Scan Appointment.</a>
               <a href="#surgery" class="btn btn-appoint">Make a Surgery Appointment.</a>
@@ -66,9 +67,10 @@
 
   <section id="radiology" class="section-padding">
     <div class="container">
-      <form action="#" method="post" class="booking-form">
+      <form action="{{ url_for('views.patient', patient_id=patient[0]) }}" method="post" class="booking-form">
         <div class="form-row">
-          <h2>Book a Scan</h2>
+          <h2>what are you waiting for {{patient[3]}}</h2>
+          <h2>Book a Scan </h2>
           <label for="scanType">Scan Type:</label>
           <select id="scanType" name="scanType" class="form-select" required onchange="updateTestTypes()">
             <option value="null">Type</option>
@@ -90,6 +92,10 @@
           <input type="date" id="appointmentDate" name="appointmentDate" required>
         </div>
         <div class="form-row">
+          <label for="appointmentHour">Appointment Hour:</label>
+          <input type="time" id="appointmentHour" name="appointmentHour1" required>
+        </div>
+        <div class="form-row">
           <label for="additionalNotes">Additional Notes:</label>
           <textarea id="additionalNotes" name="additionalNotes" rows="4"></textarea>
         </div>
@@ -102,25 +108,29 @@
       <!-- Appointments Section -->
       <section  class="section-padding">
         <div id="appointments" class="container">
-          <h2>Scan Appointments</h2>
+          <h2>{{patient[5]}}'s Scan Appointments</h2>
           <div class="table-responsive">
             <table class="table table-striped custom-table">
               <thead>
                 <tr>
                   <th scope="col">Appointment Id</th>
                   <th scope="col">Date</th>
-                  <th scope="col">Time</th>
+                  <th scope="col">time</th>
+                  <th scope="col">Scan Type</th>
                   <th scope="col">Scan</th>
                 </tr>
               </thead>
               <tbody>
+                {% for scan in scans %}
                 <tr scope="row">
-                  <td>1392</td>
-                  <td>12/3/2014</td>
-                  <td>2:00 pm</td>
-                  <td><a href="#">View</a></td>
+                  <td>{{ scan[0] }}</td>
+                  <td>{{ scan[6] }}</td>
+                  <td>{{ scan[9 ] }}</td>
+                  <td>{{ scan[3] }}</td>
+                  <td>{{ scan[5] }}</td>
                 </tr>
-                <tr>
+                {% endfor %}
+                <!-- <tr>
                   <td>4616</td>
                   <td>12/3/2014</td>
                   <td>2:00 pm</td>
@@ -149,7 +159,7 @@
                   <td>12/3/2014</td>
                   <td>2:00 pm</td>
                   <td><a href="#" class="more">View</a></td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
           </div>
@@ -227,7 +237,7 @@
   <!-- Surgery Section -->
   <section id="surgery" class="section-padding">
     <div class="container">
-      <form action="#" method="post" class="booking-form">
+      <form action="{{ url_for('views.patient', patient_id=patient[0]) }}" method="post" class="booking-form">
         <div class="form-row">
           <h2>Book a Surgery</h2>
           <label for="Surgery">Surgery Type:</label>
@@ -253,7 +263,7 @@
       </div>
         <div class="form-row">
           <label for="appointmentDate">Appointment Date:</label>
-          <input type="date" id="appointmentDate" name="appointmentDate" required>
+          <input type="date" id="appointmentDate" name="appointmentDate2" required>
         </div>
         <div class="form-row">
           <label for="appointmentHour">Appointment Hour:</label>
@@ -261,7 +271,7 @@
         </div>
         <div class="form-row">
           <label for="additionalNotes">Additional Notes:</label>
-          <textarea id="additionalNotes" name="additionalNotes" rows="4"></textarea>
+          <textarea id="additionalNotes" name="additionalNotes2" rows="4"></textarea>
         </div>
         <div class="form-row button-submit">
           <button type="submit" class="btn btn-submit">Book Scan</button>
@@ -272,7 +282,7 @@
     <!-- Appointments Section -->
     <section  class="section-padding">
       <div id="appointments" class="container">
-        <h2>Scan Appointments</h2>
+        <h2>{{patient[5]}}'s Surgery Appointments</h2>
         <div class="table-responsive">
           <table class="table table-striped custom-table">
             <thead>
@@ -284,13 +294,15 @@
               </tr>
             </thead>
             <tbody>
+              {% for surgery in surgerys %}
               <tr scope="row">
-                <td>1392</td>
-                <td>12/3/2014</td>
-                <td>2:00 pm</td>
-                <td><a>Dr.Safwat</a></td>
+                <td>{{ surgery[0] }}</td>
+                <td>{{ surgery[4] }}</td>
+                <td>{{ surgery[8] }}</td>
+                <td>{{ surgery[9] }}</td>
               </tr>
-              <tr>
+              {% endfor %}
+              <!-- <tr>
                 <td>4616</td>
                 <td>12/3/2014</td>
                 <td>2:00 pm</td>
@@ -319,7 +331,7 @@
                 <td>12/3/2014</td>
                 <td>2:00 pm</td>
                 <td><a>Dr.Safwat</a></td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>

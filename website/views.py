@@ -16,7 +16,7 @@ database_session = psycopg2.connect(
     port=5432,
     host='localhost',
     user='postgres',
-    password= '132003'
+    password= 'admin'
 )
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -61,11 +61,12 @@ def create_patient(username, name, email, password, birthdate):
 # Utility function to authenticate a user and render the appropriate template
 def authenticate_user(user_type, username, password):
     if user_type == 'patient':
-                cursor.execute('SELECT password FROM patient WHERE user_name = %s', (username,))
-                password = cursor.fetchone()
-                if password is not None:
-                    if password == password:
-                        return render_template('patient.html')
+                cursor.execute('SELECT * FROM patient WHERE user_name = %s', (username,))
+                patient = cursor.fetchone()
+                print(patient[4])
+                if patient[4] is not None:
+                    if patient[4] == password:
+                     return redirect(url_for('views.patient',patient_id = patient[0]))
 
     elif user_type == 'doctor':
         cursor.execute('SELECT * FROM doctor WHERE user_name = %s', (username,))
@@ -104,11 +105,9 @@ def create_doctor(ssn, email, password, user_name, full_name):
 
 # Main route for index
 @views.route('/', methods=['GET', 'POST'])
-@login_required
-def index(patient_id):
-    cursor.execute(f'SELECT * FROM patient WHERE ID = {patient_id};')
-    patient = cursor.fetchone()
-    return render_template('index.html', patient_id=patient_id)
+
+def index():
+    return render_template('index.html')
 
 # Route for login
 @views.route('/login', methods=['GET', 'POST'])
@@ -185,10 +184,56 @@ def doctor(doctor_id):
 
     return render_template('doctor.html', doctor=doctor, scans=scans)
 
-@views.route('/patient')
-def patient():
-    return render_template('patient.html')
+@views.route('/patient/<int:patient_id>', methods=['GET', 'POST'])
+def patient(patient_id):
+    if  request.method == 'POST':
+        scan_type = request.form.get('scanType')
+        print(scan_type)
+        test_type = request.form.get('testType')
+        appointment_date = request.form.get('appointmentDate')
+        additional_notes = request.form.get('additionalNotes')
+        hour_minute1 = request.form.get('appointmentHour')
+        book_scan(scan_type,test_type,appointment_date,additional_notes,patient_id,hour_minute1)
+        surgery_type = request.form.get('SurgeryType')
+        doctor_name = request.form.get('DoctorName')
+        date = request.form.get('appointmentDate2')
+        hour_minute = request.form.get('appointmentHour')
+        patient_notes = request.form.get('additionalNotes2')
+        print(hour_minute)
+        book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,patient_id)
+    cursor.execute('SELECT * FROM patient WHERE ID = %s', (patient_id,))
+    patient = cursor.fetchone()
+    cursor.execute('SELECT * FROM surgery WHERE patient_id = %s', (patient_id,))
+    surgerys=cursor.fetchall()
+    cursor.execute('SELECT * FROM scan WHERE patient_id = %s', (patient_id,))
+    scans=cursor.fetchall()
+    return render_template('patient.html',patient=patient,surgerys=surgerys,scans=scans)
 
+
+def book_scan(scan_type,test_type,appointment_date,additional_notes,patient_id,time):
+    if  scan_type :
+        appointment_day=(appointment_date.split('-')[-1])
+        appointment_month=(appointment_date.split('-')[-2])
+        appointment_year=(appointment_date.split('-')[-3])
+        cursor.execute('INSERT INTO scan(machine,category,date,patient_notes,patient_id,time) VALUES (%s, %s,%s,%s,%s,,%s)',(scan_type,test_type,appointment_date,additional_notes,patient_id,time) )
+        database_session.commit()
+        
+def book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,patient_id):
+    if surgery_type:
+        cursor.execute('SELECT id FROM doctor WHERE full_name = %s', (doctor_name,))
+        id=cursor.fetchall()
+        print(id)
+        print(doctor_name)
+        hour=int(hour_minute.split(':')[0])
+        print(hour)
+        if hour<=16 and hour>=8:
+            if not id:              ##untill doctor is linked to patient then remove not
+                cursor.execute('INSERT INTO surgery(type,date,hour_minute,additional_notes,patient_id,doctor_name) VALUES (%s, %s,%s,%s,%s,%s)',(surgery_type,date,hour_minute,additional_notes,patient_id,doctor_name) )
+                database_session.commit()   
+            else:  
+                print('doctor id is none')
+        else:
+            print('hour is out of range')
 @views.route('/admin', methods=['GET', 'POST'])
 def admin():
 

@@ -12,7 +12,7 @@ database_session = psycopg2.connect(
     port=5432,
     host='localhost',
     user='postgres',
-    password= '132003'
+    password= 'admin'
 )
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -35,7 +35,7 @@ def create_app():
   
     @login_manager.user_loader
     def load_user(user_id):
-        cursor.execute(f'SELECT * FROM doctor WHERE user_id ={user_id}')
+        cursor.execute(f'SELECT * FROM doctor WHERE id ={user_id}')
         doctor = cursor.fetchall()
         return doctor
     
