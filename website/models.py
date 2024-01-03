@@ -93,14 +93,41 @@ def authenticate_user(user_type, username, password):
 
 def book_scan(scan_type,test_type,appointment_date,additional_notes,patient_id,time):
     message=None
-    if  scan_type :
-        if int(time)>=8 and int(time)<=18:
-            cursor.execute('INSERT INTO scan(machine,category,date,patient_notes,patient_id,time) VALUES (%s, %s,%s,%s,%s,%s)',(scan_type,test_type,appointment_date,additional_notes,patient_id,time) )
-            database_session.commit()
-            message='Scan is successefly registered'
-            return message
+    if scan_type:
+        cursor.execute('SELECT date FROM surgery WHERE patient_id=%s', (patient_id,))
+        surgery_registered_date=cursor.fetchall()
+        surgery_registered_date = [str(item[0]) for item in surgery_registered_date]
+        appointment_date=str(appointment_date)
+        #####################################################
+        cursor.execute('SELECT hour_minute FROM surgery WHERE patient_id=%s', (patient_id,))
+        surgery_registered_hours=cursor.fetchall()
+        surgery_registered_hours = [int(item[0].split(':')[0]) for item in surgery_registered_hours]
+        # print(surgery_registered_hours)
+        ##################################################
+        cursor.execute('SELECT date FROM scan WHERE patient_id=%s', (patient_id,))
+        scan_registered_date=cursor.fetchall()
+        scan_registered_date = [str(item[0]) for item in scan_registered_date]
+        cursor.execute('SELECT time FROM scan WHERE patient_id=%s', (patient_id,))
+        scan_registered_hours=cursor.fetchall()
+        scan_registered_hours = [int(item[0].split(':')[0]) if isinstance(item[0], str) else None for item in scan_registered_hours]
+        
+        time=int(time)
+        if not any(time == registered_hour and appointment_date==date1  for registered_hour,date1 in zip(scan_registered_hours,scan_registered_date)):
+            if not any(time == registered_hour and appointment_date==date1  for registered_hour,date1 in zip(surgery_registered_hours,surgery_registered_date)):
+                if  scan_type :
+                    if int(time)>=8 and int(time)<=18:
+                        cursor.execute('INSERT INTO scan(machine,category,date,patient_notes,patient_id,time) VALUES (%s, %s,%s,%s,%s,%s)',(scan_type,test_type,appointment_date,additional_notes,patient_id,time) )
+                        database_session.commit()
+                        message='Scan is successefly registered'
+                        return message
+                    else:
+                        message='Scaning department is closed at this time please choose time from 8 to 18'
+                        return message
+            else:
+                message='You already registered a surgey at the same time'
+                return message
         else:
-            message='Scaning department is closed at this time please choose time from 8 to 18'
+            message='You already registered a scan at the same time'
             return message
         
 def book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,patient_id):
@@ -110,6 +137,18 @@ def book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,pati
         # print(doctor_name)
         cursor.execute('SELECT id FROM doctor WHERE full_name = %s', (doctor_name,))
         id=int(cursor.fetchall()[0][0])
+        ##########################
+        cursor.execute('SELECT start_work FROM doctor WHERE full_name = %s', (doctor_name,))
+        start_work=cursor.fetchall()[0][0]
+        if start_work:
+            int(start_work)
+        cursor.execute('SELECT end_work FROM doctor WHERE full_name = %s', (doctor_name,))
+        end_work=cursor.fetchall()[0][0]
+        if end_work:
+            int(start_work)
+        
+        ##########################
+        
         # print(id)
         cursor.execute('SELECT hour_minute FROM surgery WHERE doctor_id=%s', (id,))
         doctor_registered_hours=cursor.fetchall()
@@ -120,18 +159,48 @@ def book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,pati
         doctor_registered_date = [str(item[0]) for item in doctor_registered_date]
         print(doctor_registered_date)
         hour=int(hour_minute)
+        #########################################
+        cursor.execute('SELECT date FROM surgery WHERE patient_id=%s', (patient_id,))
+        surgery_registered_date=cursor.fetchall()
+        surgery_registered_date = [str(item[0]) for item in surgery_registered_date]
+        #####################################################
+        cursor.execute('SELECT hour_minute FROM surgery WHERE patient_id=%s', (patient_id,))
+        surgery_registered_hours=cursor.fetchall()
+        surgery_registered_hours = [int(item[0].split(':')[0]) for item in surgery_registered_hours]
+        #########################################
+        cursor.execute('SELECT date FROM scan WHERE patient_id=%s', (patient_id,))
+        scan_registered_date=cursor.fetchall()
+        scan_registered_date = [str(item[0]) for item in scan_registered_date]
+        cursor.execute('SELECT time FROM scan WHERE patient_id=%s', (patient_id,))
+        ################################################
+        scan_registered_hours=cursor.fetchall()
+        scan_registered_hours = [int(item[0].split(':')[0]) if isinstance(item[0], str) else None for item in scan_registered_hours]
         # print(hour)
-        if not any(hour == registered_hour and date==date1  for registered_hour,date1 in zip(doctor_registered_hours,doctor_registered_date)):
-            if  id:              ##untill doctor is linked to patient then remove not
-                cursor.execute('INSERT INTO surgery(type,date,hour_minute,additional_notes,patient_id,doctor_name,doctor_id) VALUES (%s, %s,%s,%s,%s,%s,%s)',(surgery_type,date,hour_minute,additional_notes,patient_id,doctor_name,id) )
-                database_session.commit()   
-                message='Surgery is successfuly registered with'+' '+'Dr '+doctor_name
+        if start_work:
+            if hour>=start_work and hour<=end_work:
+                if not any(hour == registered_hour and date==date1  for registered_hour,date1 in zip(surgery_registered_hours,surgery_registered_date)):
+                    if not any(hour == registered_hour and date==date1  for registered_hour,date1 in zip(scan_registered_hours,scan_registered_date)):
+                        if not any(hour == registered_hour and date==date1  for registered_hour,date1 in zip(doctor_registered_hours,doctor_registered_date)):
+                            if  id:              ##untill doctor is linked to patient then remove not
+                                cursor.execute('INSERT INTO surgery(type,date,hour_minute,additional_notes,patient_id,doctor_name,doctor_id) VALUES (%s, %s,%s,%s,%s,%s,%s)',(surgery_type,date,hour_minute,additional_notes,patient_id,doctor_name,id) )
+                                database_session.commit()   
+                                message='Surgery is successfuly registered with'+' '+'Dr '+doctor_name
+                                return message
+                        else:
+                            print('hour is out of range')
+                            message= 'Dr '+doctor_name+' '+ 'is not available at this time'
+                            return message
+                    else:
+                        message= 'You already registered a scan at the same time'
+                        return message
+                else:
+                    message= 'You already registered a surgey at the same time'
+                    return message
+            else:
+                message= 'Dr is only available between ' +str(start_work)+' and '+str(end_work)
                 return message
-        else:
-            print('hour is out of range')
-            message= 'Dr '+doctor_name+' '+ 'is not available at this time'
-            return message
-
+            
+                
 def get_doctor_by_id(doctor_id):
     database_session.rollback()
     cursor.execute('SELECT * FROM doctor WHERE ID = %s', (doctor_id,))

@@ -82,7 +82,6 @@ def view_patient_info(patient_id):
     return render_template('view_patient_info.html', patient_info=patient_info)
 
 @views.route('/patient/<int:patient_id>', methods=['GET', 'POST'])
-@login_required
 def patient(patient_id):
     database_session.rollback()
     message = None
@@ -120,7 +119,7 @@ def patient(patient_id):
 def get_doctors():
     database_session.rollback()    
     cursor.execute('SELECT * FROM doctor')
-    doctors_data = cursor.fetchone()
+    doctors_data = cursor.fetchall()
 
     surgery_type = request.form.get('SurgeryType')
     filtered_doctors = [doctor for doctor in doctors_data if doctor[11] == surgery_type]
