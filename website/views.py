@@ -107,7 +107,7 @@ def patient(patient_id):
 def get_doctors():
     database_session.rollback()    
     cursor.execute('SELECT * FROM doctor')
-    doctors_data = cursor.fetchone()
+    doctors_data = cursor.fetchall()
 
     surgery_type = request.form.get('SurgeryType')
     filtered_doctors = [doctor for doctor in doctors_data if doctor[11] == surgery_type]
