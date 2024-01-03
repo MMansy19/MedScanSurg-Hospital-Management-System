@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Information</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+        text-align: center;
+      }
+
+      h2 {
+        color: #333;
+      }
+
+      p {
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Patient Information</h2>
+    <p>ID: {{ patient_info[0] }}</p>
+    <p>SSN: {{ patient_info[1] }}</p>
+    <p>Email: {{ patient_info[2] }}</p>
+    <p>Username: {{ patient_info[3] }}</p>
+    <p>Full Name: {{ patient_info[5] }}</p>
+    <p>Birthdate: {{ patient_info[6] }}</p>
+    <!-- Add more patient information as needed -->
+  </body>
+</html>

@@ -43,7 +43,7 @@ def save_scan(form_picture):
         picture_fn = random_hex + f_ext
         picture_path = os.path.join(views.root_path, 'static/scans', picture_fn)
 
-        output_size = (300, 300)  # Adjust the size as needed
+        output_size = (500, 500)  # Adjust the size as needed
         i = Image.open(form_picture)
         i.thumbnail(output_size)
         i.save(picture_path)
@@ -143,9 +143,12 @@ def doctor(doctor_id):
     cursor.execute('SELECT * FROM doctor WHERE ID = %s', (doctor_id,))
     doctor = cursor.fetchone()
     
-    cursor.execute('SELECT * FROM Scan')
+    cursor.execute('SELECT * FROM Scan WHERE doctor_id IS NOT NULL')
     scans = cursor.fetchall()
-
+    
+    cursor.execute('SELECT * FROM Scan WHERE doctor_id IS NULL')
+    scans2 = cursor.fetchall()
+    
     if request.method == 'POST':
     
         full_name = request.form.get('full_name')
@@ -170,27 +173,28 @@ def doctor(doctor_id):
         database_session.commit()
         
         
-       # Fetch the scans from the form
         price = int(request.form.get('price')) if request.form.get('price') else 0
         new_scan_photo = request.files.get('report')
         scan_photo = save_scan(new_scan_photo)
-                
+        scan_id = int(request.form.get('scan_id'))  # Fetch the scan_id from the form
+
         cursor.execute('''
             UPDATE Scan
             SET price = %s, report = %s, doctor_id = %s
             WHERE scan_id = %s
-        ''', (price, scan_photo, doctor_id ,scans[1][0] ))
+        ''', (price, scan_photo, doctor_id, scan_id))
         database_session.commit()
 
         return redirect(url_for('views.doctor', doctor_id=doctor_id))
     
 
     # if doctor[10] == 'Radiology':
-    #     return render_template('Radiologydoctor.html', doctor=doctor, scans=scans)
-    # elif doctor[10] == 'Radiology':
-    #     return render_template('Surgerydoctor.html', doctor=doctor, scans=scans)
+    # return render_template('Radiologydoctor.html', doctor=doctor, scans=scans, scans2=scans2)
+    
+    # elif doctor[10] == 'Surgery':
+    return render_template('Surgerydoctor.html', doctor=doctor, scans=scans, scans2=scans2)
  
-    return render_template('doctor.html', doctor=doctor, scans=scans)
+    # return render_template('doctor.html', doctor=doctor, scans=scans, scans2=scans2)
 
 @views.route('/scan_detail/<int:scan_id>')
 def scan_detail(scan_id):
@@ -225,6 +229,14 @@ def patient(patient_id):
     cursor.execute('SELECT * FROM scan WHERE patient_id = %s', (patient_id,))
     scans=cursor.fetchall()
     return render_template('patient.html',patient=patient,surgerys=surgerys,scans=scans,msg=message)
+
+@views.route('/view_patient_info/<int:patient_id>')
+def view_patient_info(patient_id):
+    # Fetch patient information from the database
+    cursor.execute('SELECT * FROM Patient WHERE ID = %s', (patient_id,))
+    patient_info = cursor.fetchone()
+
+    return render_template('view_patient_info.html', patient_info=patient_info)
 
 def book_scan(scan_type,test_type,appointment_date,additional_notes,patient_id,time):
     if  scan_type :

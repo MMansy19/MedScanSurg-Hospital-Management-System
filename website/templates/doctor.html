@@ -82,41 +82,45 @@
       </div>
     </section>
 
+  <div class="container">
     <br />
     <h3>Dr. {{ doctor[5] }}</h3>
     <h3>Working Hours: {{ doctor[6] }} hours</h3>
 
-    <h2>Scans:</h2>
-    <form
-      method="POST"
-      action="{{ url_for('views.doctor', doctor_id=doctor[0]) }}"
-      enctype="multipart/form-data"
-    >
-      <ul>
-        {% for scan in scans %}
+    <form method="POST" action="{{ url_for('views.doctor', doctor_id=doctor[0]) }}" enctype="multipart/form-data">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Scan Price</th>
+            <th>Upload Scan Image</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for scan in scans2 %}
+            <tr>
+              <td>
+                <label for="price">Scan Price:</label>
+                <input type="number" id="price" name="price" min="0" required />
+              </td>
+              <td>
+                <input type="file" name="report" />
+                <input type="hidden" name="scan_id" value="{{ scan[0] }}" /> <!-- Add this line -->
+              </td>
+              <td>
+                <button type="submit">Submit</button>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
-        <li>
-          <img <img src="\static\scans\{{ scan[5] }}" alt="Scan Photo""
-          style="max-width: 300px; max-height: 300px" />
-
-          <label for="price">Scan Price:</label>
-          <input type="number" id="price" name="price" min="0" required />
-
-          <p>Scan Machine: {{ scan[3] }}</p>
-          <p>Scan Category: {{ scan[4] }}</p>
-          <p>Date: {{ scan[6] }}</p>
-          <p>Time: {{ scan[9] }}</p>
-          <label for="report">Scan Report Image:</label>
-          <br />
-          <input type="file" name="report" />
-        </li>
-        <button type="submit">Submit</button>
-        {% endfor %}
-      </ul>
-    </form>
+      
     <section class="section-padding">
+      
       <div id="appointments" class="container">
         <h2>Radiology Appointments</h2>
+        
         <div class="table-responsive">
           <table class="table table-striped custom-table">
             <thead>
@@ -128,7 +132,7 @@
                 <th scope="col">Scan Category</th>
                 <th scope="col">Scan Price</th>
                 <th scope="col">Scan Image</th>
-                <th scope="col">Actions</th>
+                <th scope="col">Patient Info</th>
               </tr>
             </thead>
             <tbody>
@@ -141,27 +145,20 @@
                 <td>{{ scan[4] }}</td>
                 <td>{{ scan[2] }}$</td>
                 <td>
-                  <img
-                    src="\static\scans\{{ scan[5] }}"
-                    alt="No Image Added"
-                    style="max-width: 50px; max-height: 50px"
-                  />
-                </td>
-
-                <td>
                   <a
                     href="{{ url_for('views.scan_detail', scan_id=scan[0]) }}"
-                    target="_blank"
-                    >View</a
-                  >
-                  <button class="edit-btn" onclick="editScan({{ scan[0] }})">
-                    Edit
-                  </button>
-                </td>
+                    target="_blank">View</a>
+                  </td>
+                  <td>
+  <a href="{{ url_for('views.view_patient_info', patient_id=scan[8]) }}">View</a>
+</td>
+
               </tr>
               {% endfor %}
+              
             </tbody>
           </table>
+        </form>
         </div>
       </div>
     </section>
@@ -459,5 +456,7 @@
     <script src="js/jquery.easing.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/custom.js"></script>
+
+
   </body>
 </html>
