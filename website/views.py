@@ -31,7 +31,6 @@ def login():
     return render_template('login.html')
 
 @views.route('/doctor/<int:doctor_id>', methods=['GET', 'POST'])
-@login_required
 def doctor(doctor_id):
     database_session.rollback()
     doctor = get_doctor_by_id(doctor_id)
@@ -39,18 +38,6 @@ def doctor(doctor_id):
     scans2 = get_unassigned_scans()
 
     if request.method == 'POST':
-        doctor_data = {
-            'full_name': request.form.get('full_name'),
-            'working_hours': int(request.form.get('working_hours')) if request.form.get('working_hours') else 0,
-            'salary': int(request.form.get('salary')) if request.form.get('salary') else 0,
-            'phone': request.form.get('phone')[:11] if request.form.get('phone') else '',
-            'address': request.form.get('address'),
-            'specialty': request.form.get('specialty'),
-            'gender': request.form.get('gender')[0],
-            'photo': save_picture(request.files.get('photo'))
-        }
-
-        update_doctor_profile(doctor_id, doctor_data)
 
         scan_data = {
             'price': int(request.form.get('price')) if request.form.get('price') else 0,
@@ -66,6 +53,7 @@ def doctor(doctor_id):
         return render_template('Radiologydoctor.html', doctor=doctor, scans=scans, scans2=scans2)
     if doctor[10] == 'Surgery':
         return render_template('Surgerydoctor.html', doctor=doctor, scans=scans, scans2=scans2)
+    return render_template('Radiologydoctor.html', doctor=doctor, scans=scans, scans2=scans2)
 
 @views.route('/scan_detail/<int:scan_id>')
 def scan_detail(scan_id):
@@ -82,7 +70,6 @@ def view_patient_info(patient_id):
     return render_template('view_patient_info.html', patient_info=patient_info)
 
 @views.route('/patient/<int:patient_id>', methods=['GET', 'POST'])
-@login_required
 def patient(patient_id):
     database_session.rollback()
     message = None
@@ -167,8 +154,8 @@ def edit_doctor(doctor_id):
             'salary': int(request.form.get('salary')) if request.form.get('salary') else 0,
             'phone': request.form.get('phone')[:11] if request.form.get('phone') else '',
             'address': request.form.get('address'),
-            'specialty': request.form.get('specialty'),
-            'gender': request.form.get('gender')[0],
+            'start_work': request.form.get('start'),
+            'end_work': request.form.get('end'),
             'photo': save_picture(request.files.get('photo'))
         }
 

@@ -153,12 +153,12 @@ def update_doctor_profile(doctor_id, data):
     cursor.execute('''
         UPDATE doctor
         SET full_name = %s, working_hours = %s, salary = %s, phone = %s, address = %s,
-            specialty = %s, gender = %s, photo = %s
+             photo = %s, start_work = %s, end_work = %s
         WHERE ID = %s
     ''', (
         data['full_name'], data['working_hours'], data['salary'],
         data['phone'][:11] if data['phone'] else '', data['address'],
-        data['specialty'], data['gender'], data['photo'], doctor_id
+          data['photo'], data['start_work'], data['end_work'], doctor_id
     ))
     database_session.commit()
 
