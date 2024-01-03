@@ -93,6 +93,8 @@
       enctype="multipart/form-data"
     >
       <ul>
+        {% for scan in scans %}
+
         <li>
           <img <img src="\static\scans\{{ scan[5] }}" alt="Scan Photo""
           style="max-width: 300px; max-height: 300px" />
@@ -109,8 +111,60 @@
           <input type="file" name="report" />
         </li>
         <button type="submit">Submit</button>
+        {% endfor %}
       </ul>
     </form>
+    <section class="section-padding">
+      <div id="appointments" class="container">
+        <h2>Radiology Appointments</h2>
+        <div class="table-responsive">
+          <table class="table table-striped custom-table">
+            <thead>
+              <tr>
+                <th scope="col">Scan ID</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+                <th scope="col">Scan Machine</th>
+                <th scope="col">Scan Category</th>
+                <th scope="col">Scan Price</th>
+                <th scope="col">Scan Image</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for scan in scans %}
+              <tr>
+                <td>{{ scan[0] }}</td>
+                <td>{{ scan[6] }}</td>
+                <td>{{ scan[9] }}</td>
+                <td>{{ scan[3] }}</td>
+                <td>{{ scan[4] }}</td>
+                <td>{{ scan[2] }}$</td>
+                <td>
+                  <img
+                    src="\static\scans\{{ scan[5] }}"
+                    alt="No Image Added"
+                    style="max-width: 50px; max-height: 50px"
+                  />
+                </td>
+
+                <td>
+                  <a
+                    href="{{ url_for('views.scan_detail', scan_id=scan[0]) }}"
+                    target="_blank"
+                    >View</a
+                  >
+                  <button class="edit-btn" onclick="editScan({{ scan[0] }})">
+                    Edit
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
 
     <section>
       <svg style="position: absolute; width: 0; height: 0; display: none">

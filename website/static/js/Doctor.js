@@ -1,24 +1,23 @@
-const btnR = document.querySelector('.btn-right');
-const btnL = document.querySelector('.btn-left');
-const tracks = document.querySelector('.tracks');
+const btnR = document.querySelector(".btn-right");
+const btnL = document.querySelector(".btn-left");
+const tracks = document.querySelector(".tracks");
 const tracksW = tracks.scrollWidth;
 
-btnR.addEventListener('click', _ => {
+btnR.addEventListener("click", (_) => {
   tracks.scrollBy({
     left: tracksW / 2,
-    behavior: 'smooth'
+    behavior: "smooth",
   });
 });
 
-btnL.addEventListener('click', _ => {
+btnL.addEventListener("click", (_) => {
   tracks.scrollBy({
     left: -tracksW / 2,
-    behavior: 'smooth'
+    behavior: "smooth",
   });
 });
 
-
-let observer = new IntersectionObserver(entries => {
+let observer = new IntersectionObserver((entries) => {
   if (!entries[0].isIntersecting) {
     document.body.classList.add("reveal");
   } else {

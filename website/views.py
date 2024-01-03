@@ -16,7 +16,7 @@ database_session = psycopg2.connect(
     port=5432,
     host='localhost',
     user='postgres',
-    # password= '132003'
+    password= '132003'
 )
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -144,7 +144,7 @@ def doctor(doctor_id):
     doctor = cursor.fetchone()
     
     cursor.execute('SELECT * FROM Scan')
-    scan = cursor.fetchall()
+    scans = cursor.fetchall()
 
     if request.method == 'POST':
     
@@ -179,7 +179,7 @@ def doctor(doctor_id):
             UPDATE Scan
             SET price = %s, report = %s, doctor_id = %s
             WHERE scan_id = %s
-        ''', (price, scan_photo, doctor_id ,scan[3][0] ))
+        ''', (price, scan_photo, doctor_id ,scans[1][0] ))
         database_session.commit()
 
         return redirect(url_for('views.doctor', doctor_id=doctor_id))
@@ -190,8 +190,14 @@ def doctor(doctor_id):
     # elif doctor[10] == 'Radiology':
     #     return render_template('Surgerydoctor.html', doctor=doctor, scans=scans)
  
-    return render_template('doctor.html', doctor=doctor, scan=scan)
+    return render_template('doctor.html', doctor=doctor, scans=scans)
 
+@views.route('/scan_detail/<int:scan_id>')
+def scan_detail(scan_id):
+    cursor.execute('SELECT * FROM scan WHERE scan_id = %s', (scan_id,))
+    scan = cursor.fetchone()
+
+    return render_template('scan_detail.html', scan_id=scan_id, scan=scan)
 
 @views.route('/patient/<int:patient_id>', methods=['GET', 'POST'])
 def patient(patient_id):
@@ -297,5 +303,4 @@ def delete_doctor(doctor_id):
     cursor.execute('DELETE FROM doctor WHERE id = %s', (doctor_id,))
     database_session.commit()
     return redirect(url_for('views.admin'))
-
 
