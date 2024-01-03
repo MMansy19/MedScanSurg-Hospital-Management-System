@@ -4,15 +4,13 @@ from os import path
 from flask_login import LoginManager
 import psycopg2
 import psycopg2.extras
-db = SQLAlchemy()
-DB_NAME = "database.db"
 
 database_session = psycopg2.connect(
     database='postgres',
     port=5432,
     host='localhost',
     user='postgres',
-    password= 'root1234'
+    password= '132003'
 )
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -20,7 +18,6 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:admin@localhost/database'
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///project.db'
 
     
     from .views import views

@@ -71,6 +71,9 @@
         <div class="form-row">
           <h2>what are you waiting for {{patient[3]}}</h2>
           <h2>Book a Scan </h2>
+          {% if msg1 %}
+          <div class="alert alert-warning">{{ msg1 }}</div>
+          {% endif %}
           <label for="scanType">Scan Type:</label>
           <select id="scanType" name="scanType" class="form-select" required onchange="updateTestTypes()">
             <option value="null">Type</option>
@@ -93,7 +96,7 @@
         </div>
         <div class="form-row">
           <label for="appointmentHour">Appointment Hour:</label>
-          <input type="time" id="appointmentHour" name="appointmentHour" required>
+          <input type="text" id="appointmentHour" name="appointmentHour1" pattern="[0-9]{2}" maxlength="2" required placeholder="Enter hours in 24-hour format (e.g., 08 for 8 AM, 17 for 5 PM).">
         </div>
         <div class="form-row">
           <label for="additionalNotes">Additional Notes:</label>
@@ -187,7 +190,7 @@
                   <p>Between 45 minutes and 1 hour</p>
                   <h3>How?</h3>
                   <p> MRI uses magnetic fields to create detailed images</p>
-                </div>
+                </div>  
               </div>
               <div class="service-info">
                 <div class="icon">
@@ -262,7 +265,10 @@
       <div class="form-row" id="DoctorSelect" style="display: none;">
        
         <label for="DoctorName">Pick Doctor:</label>
-        <select id="DoctorName" name="DoctorName" class="form-select" required onchange="updateDoctors()">
+        <select id="DoctorName" name="DoctorName" class="form-select" required>
+          <!-- {% for option in options %}
+          <option value="{{ option[5] }}">Dr. {{ option[5] }}</option>
+          {% endfor %} -->
         </select>
       </div>
         <div class="form-row">
@@ -271,14 +277,16 @@
         </div>
         <div class="form-row">
           <label for="appointmentHour">Appointment Hour:</label>
-          <input type="time" id="appointmentHour" name="appointmentHour" required>
+          <input type="text" id="appointmentHour" name="appointmentHour" pattern="[0-9]{2}" maxlength="2" required placeholder="Enter hours in 24-hour format (e.g., 08 for 8 AM, 17 for 5 PM).">
+          
+
         </div>
         <div class="form-row">
           <label for="additionalNotes">Additional Notes:</label>
           <textarea id="additionalNotes" name="additionalNotes2" rows="4"></textarea>
         </div>
         <div class="form-row button-submit">
-          <button type="submit" class="btn btn-submit">Book Scan</button>
+          <button type="submit" class="btn btn-submit">Book Surgery</button>
         </div>
       </form>
     </div>
