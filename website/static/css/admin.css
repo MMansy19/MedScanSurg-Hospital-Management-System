@@ -1,0 +1,41 @@
+/* Add this CSS to your existing styles or create a new CSS file */
+
+#loggedin-counts {
+    
+    padding: 20px 0;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.box {
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow */
+    padding: 20px;
+    border-radius: 8px; /* Add border-radius for rounded corners */
+    background-color: #ffffff;
+    width: 200px;
+}
+
+.box h3 {
+    margin-bottom: 10px;
+    color: #495057;
+}
+
+.box p {
+    font-size: 24px;
+    font-weight: bold;
+    color:  rgba(12, 184, 182)
+}
+
+.table-responsive{
+    width: 900px;
+}
+
+.Doctors th {
+    text-align: center;
+    width: 15px
+}
+
