@@ -2,7 +2,7 @@ from datetime import datetime
 import os
 import secrets
 from PIL import Image
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for,jsonify
 from flask_login import login_required, current_user
 from . import db , cursor
 from .models import *
@@ -91,7 +91,7 @@ def create_doctor(ssn, email, password, user_name, full_name):
             salary = 80000
             phone = '1234567890'
             address = 'Some Address'
-            specialty= 'Radiology'
+            specialty= 'Neurosurgery'
             gender='M' 
             cursor.execute('INSERT INTO doctor(ssn,email, password, user_name,full_name,working_hours,salary,phone,address,specialty,gender) VALUES (%s, %s ,%s,%s,%s,%s,%s,%s,%s,%s,%s)', (ssn,email,password, user_name, full_name,working_hours,salary,phone,address, specialty,gender))
             database_session.commit()
@@ -139,7 +139,17 @@ def login():
 
 @views.route('/doctor/<int:doctor_id>', methods=['GET', 'POST'])
 def doctor(doctor_id):
+    database_session.rollback()
+    # Fetch the doctor's information for rendering the form
+    cursor.execute('SELECT * FROM doctor WHERE ID = %s', (doctor_id,))
+    doctor = cursor.fetchone()
+    
+    cursor.execute('SELECT * FROM Scan')
+    scan = cursor.fetchall()
+
     if request.method == 'POST':
+    
+        full_name = request.form.get('full_name')
         full_name = request.form.get('full_name')
         working_hours = int(request.form.get('working_hours')) if request.form.get('working_hours') else 0
         salary = int(request.form.get('salary')) if request.form.get('salary') else 0
@@ -147,98 +157,125 @@ def doctor(doctor_id):
         address = request.form.get('address')
         specialty = request.form.get('specialty')
         gender = request.form.get('gender')
-        
+
+        new_photo = request.files.get('photo')
+        photo = save_picture(new_photo)
+                
         # Update the doctor's profile in the database
         cursor.execute('''
             UPDATE doctor
             SET full_name = %s, working_hours = %s, salary = %s, phone = %s, address = %s,
-                specialty = %s, gender = %s
+                specialty = %s, gender = %s, photo = %s
             WHERE ID = %s
-        ''', (full_name, working_hours, salary, phone, address, specialty, gender, doctor_id))
+        ''', (full_name, working_hours, salary, phone, address, specialty, gender, photo, doctor_id))
         database_session.commit()
         
-        # Fetch the scans from the form
-        scan_price = int(request.form.get('scan_price')) if request.form.get('scan_price') else 0
-        scan_machine = request.form.get('scan_machine')
-        scan_category = request.form.get('scan_category')
-        new_scan_photo = request.files.get('photo')
+         # Fetch the scans from the form
+        price = int(request.form.get('price')) if request.form.get('price') else 0
+        new_scan_photo = request.files.get('report')
         scan_photo = save_scan(new_scan_photo)
-        
+                
         cursor.execute('''
-            INSERT INTO Scan (doctor_id, price, machine, category, photo)
-            VALUES (%s, %s, %s, %s, %s)
-        ''', (doctor_id, scan_price, scan_machine, scan_category, scan_photo))
+            UPDATE Scan
+            SET price = %s, report = %s, doctor_id = %s
+            WHERE scan_id = %s
+        ''', (price, scan_photo, doctor_id ,scan[3][0] ))
         database_session.commit()
 
         return redirect(url_for('views.doctor', doctor_id=doctor_id))
 
-    # Rollback the current transaction
-    database_session.rollback()
+    # # Rollback the current transaction
+    # database_session.rollback()
     
-    # Fetch the doctor's information for rendering the form
-    cursor.execute('SELECT * FROM doctor WHERE ID = %s', (doctor_id,))
-    doctor = cursor.fetchone()
+    # # Fetch the doctor's information for rendering the form
+    # cursor.execute('SELECT * FROM doctor WHERE ID = %s', (doctor_id,))
+    # doctor = cursor.fetchone()
     
-    cursor.execute('SELECT * FROM Scan WHERE doctor_id = %s', (doctor_id,))
-    scans = cursor.fetchall()
+    # cursor.execute('SELECT * FROM Scan WHERE doctor_id = %s', (doctor_id,))
+    # scans = cursor.fetchall()
 
-    return render_template('doctor.html', doctor=doctor, scans=scans)
+    return render_template('doctor.html', doctor=doctor, scan=scan)
 
 @views.route('/patient/<int:patient_id>', methods=['GET', 'POST'])
 def patient(patient_id):
     message=None
+    message1=None
     if  request.method == 'POST':
         scan_type = request.form.get('scanType')
-        print(scan_type)
+        # print(scan_type)
         test_type = request.form.get('testType')
         appointment_date = request.form.get('appointmentDate')
         additional_notes = request.form.get('additionalNotes')
-        hour_minute1 = request.form.get('appointmentHour')
-        book_scan(scan_type,test_type,appointment_date,additional_notes,patient_id,hour_minute1)
+        hour_minute1 = request.form.get('appointmentHour1')
+        message1= book_scan(scan_type,test_type,appointment_date,additional_notes,patient_id,hour_minute1)
         surgery_type = request.form.get('SurgeryType')
         doctor_name = request.form.get('DoctorName')
         date = request.form.get('appointmentDate2')
         hour_minute = request.form.get('appointmentHour')
         patient_notes = request.form.get('additionalNotes2')
-        print(hour_minute)
-        message=book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,patient_id)
+        # print(hour_minute)
+        # print(type(date))     
+        message=book_surgery(surgery_type,doctor_name,date,hour_minute,patient_notes,patient_id)
     cursor.execute('SELECT * FROM patient WHERE ID = %s', (patient_id,))
     patient = cursor.fetchone()
     cursor.execute('SELECT * FROM surgery WHERE patient_id = %s', (patient_id,))
     surgerys=cursor.fetchall()
     cursor.execute('SELECT * FROM scan WHERE patient_id = %s', (patient_id,))
     scans=cursor.fetchall()
-    return render_template('patient.html',patient=patient,surgerys=surgerys,scans=scans,msg=message)
+    cursor.execute('SELECT * FROM doctor')
+    options=cursor.fetchall()
+    return render_template('patient.html',patient=patient,surgerys=surgerys,scans=scans,msg=message,msg1=message1,options=options)
 
+@views.route('/get_doctors', methods=['POST'])
+def get_doctors():
+    cursor.execute('SELECT * FROM doctor')
+    doctors_data=cursor.fetchall()
+    surgery_type = request.form.get('SurgeryType')
+    filtered_doctors = [doctor for doctor in doctors_data if doctor[11] == surgery_type]
+    return jsonify(filtered_doctors)
 
 def book_scan(scan_type,test_type,appointment_date,additional_notes,patient_id,time):
+    message=None
     if  scan_type :
-        appointment_day=(appointment_date.split('-')[-1])
-        appointment_month=(appointment_date.split('-')[-2])
-        appointment_year=(appointment_date.split('-')[-3])
-        cursor.execute('INSERT INTO scan(machine,category,date,patient_notes,patient_id,time) VALUES (%s, %s,%s,%s,%s,,%s)',(scan_type,test_type,appointment_date,additional_notes,patient_id,time) )
-        database_session.commit()
+        # appointment_day=(appointment_date.split('-')[-1])
+        # appointment_month=(appointment_date.split('-')[-2])
+        # appointment_year=(appointment_date.split('-')[-3])
+        if int(time)>=8 and int(time)<=18:
+            cursor.execute('INSERT INTO scan(machine,category,date,patient_notes,patient_id,time) VALUES (%s, %s,%s,%s,%s,%s)',(scan_type,test_type,appointment_date,additional_notes,patient_id,time) )
+            database_session.commit()
+            message='Scan is successefly registered'
+            return message
+        else:
+            message='Scaning department is closed at this time please choose time from 8 to 18'
+            return message
         
 def book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,patient_id):
     message=None
     if surgery_type:
+        doctor_name.split('.')
+        # print(doctor_name)
         cursor.execute('SELECT id FROM doctor WHERE full_name = %s', (doctor_name,))
-        id=cursor.fetchall()
-        print(id)
-        print(doctor_name)
-        hour=int(hour_minute.split(':')[0])
-        print(hour)
-        if hour<=16 and hour>=8:
-            if not id:              ##untill doctor is linked to patient then remove not
-                cursor.execute('INSERT INTO surgery(type,date,hour_minute,additional_notes,patient_id,doctor_name) VALUES (%s, %s,%s,%s,%s,%s)',(surgery_type,date,hour_minute,additional_notes,patient_id,doctor_name) )
+        id=int(cursor.fetchall()[0][0])
+        # print(id)
+        cursor.execute('SELECT hour_minute FROM surgery WHERE doctor_id=%s', (id,))
+        doctor_registered_hours=cursor.fetchall()
+        doctor_registered_hours = [int(item[0]) for item in doctor_registered_hours]
+        ###########################
+        cursor.execute('SELECT date FROM surgery WHERE doctor_id=%s', (id,))
+        doctor_registered_date=cursor.fetchall()
+        doctor_registered_date = [str(item[0]) for item in doctor_registered_date]
+        print(doctor_registered_date)
+        hour=int(hour_minute)
+        # print(hour)
+        if not any(hour == registered_hour and date==date1  for registered_hour,date1 in zip(doctor_registered_hours,doctor_registered_date)):
+            if  id:              ##untill doctor is linked to patient then remove not
+                cursor.execute('INSERT INTO surgery(type,date,hour_minute,additional_notes,patient_id,doctor_name,doctor_id) VALUES (%s, %s,%s,%s,%s,%s,%s)',(surgery_type,date,hour_minute,additional_notes,patient_id,doctor_name,id) )
                 database_session.commit()   
-                message='Surgery is successfuly registered with'+' '+doctor_name
+                message='Surgery is successfuly registered with'+' '+'Dr '+doctor_name
                 return message
-            else:  
-                print('doctor id is none')
         else:
             print('hour is out of range')
-            message= doctor_name+' '+ 'is busy at this time'
+            message= 'Dr '+doctor_name+' '+ 'is not available at this time'
             return message
 
 @views.route('/admin', methods=['GET', 'POST'])
