@@ -16,7 +16,7 @@ database_session = psycopg2.connect(
     port=5432,
     host='localhost',
     user='postgres',
-    password= '132003'
+    password= 'root1234'
 )
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
@@ -75,12 +75,12 @@ def authenticate_user(user_type, username, password):
     
     elif user_type == 'admin':
         if username == 'admin_username' and password == 'admin_password':
-            return render_template('admin.html')
+            return render_template('admin2.html')
 
     return render_template('login.html')
 
 # Utility function to create a new doctor
-def create_doctor(ssn, email, password, user_name, full_name):
+def create_doctor(ssn, email, password, user_name, full_name,department,Gender):
         cursor.execute('SELECT * FROM doctor WHERE user_name = %s', (user_name,))
         existing_doctor=cursor.fetchone()
         
@@ -89,8 +89,8 @@ def create_doctor(ssn, email, password, user_name, full_name):
             salary = 80000
             phone = '1234567890'
             address = 'Some Address'
-            specialty= 'Radiology'
-            gender='M' 
+            specialty= department
+            gender= Gender[0]
             cursor.execute('INSERT INTO doctor(ssn,email, password, user_name,full_name,working_hours,salary,phone,address,specialty,gender) VALUES (%s, %s ,%s,%s,%s,%s,%s,%s,%s,%s,%s)', (ssn,email,password, user_name, full_name,working_hours,salary,phone,address, specialty,gender))
             database_session.commit()
 
@@ -193,12 +193,29 @@ def admin():
     if request.method == 'POST':
         create_doctor(
             request.form['ssn'], request.form['email'], request.form['password'],
-            request.form['user_name'], request.form['full_name']
+            request.form['user_name'], request.form['full_name'], request.form['department'], request.form['Gender']
         )
 
     cursor.execute('SELECT * FROM doctor')
     doctors = cursor.fetchall()
-    return render_template('admin.html', doctors=doctors)
+    doctors_count = len(doctors)
+
+    cursor.execute('SELECT * FROM patient')
+    patients = cursor.fetchall()
+    patients_count = len(patients)
+
+    cursor.execute('SELECT * FROM scan')
+    scans = cursor.fetchall()
+    scans_count = len(scans)
+
+    cursor.execute('SELECT * FROM surgery')
+    surgeries = cursor.fetchall()
+    surgery_count = len(surgeries)
+
+    app_count = scans_count+surgery_count
+
+    return render_template('admin2.html', doctors=doctors,doctors_count=doctors_count,
+                           patient_count=patients_count,app_count=app_count)
 
 @views.route('/edit_doctor/<int:doctor_id>', methods=['GET', 'POST'])
 def edit_doctor(doctor_id):
