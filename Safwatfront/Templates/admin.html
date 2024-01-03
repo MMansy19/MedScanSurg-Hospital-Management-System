@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>LoginPage</title>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- google fonts -->
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/patient.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-...." crossorigin="anonymous" />
+
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <script src="{{ url_for('static', filename='contactform/contactform.js') }}"></script>
+
+
+
+
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+    <!-- Banner -->
+    <section id="adminbanner" class="banner">
+        <div class="bg-color">
+          <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+              <div class="col-md-12">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='image/logo.png') }}" class="img-responsive" style="width: 140px; margin-top: -50px;"></a>
+                </div>
+                <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+                  <ul class="nav navbar-nav">
+                    <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
+                    <li class="active"><a href="#add doctor">Add Doctor</a></li>
+                    <li class=""><a href="#Doctors">Doctors</a></li>
+                    <li class=""><a href="#Stats">Stats</a></li>
+                    <li class=""><a href="{{ url_for('login') }}">Logout </a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </nav>
+            
+        </div>
+        <section id="Stats" class="Stats">
+            <div class="container">
+                <div class="box">
+                    <h3>Doctors</h3>
+                    <p id="doctorsCount">0</p>
+                </div>
+                <div class="box">
+                    <h3>Patients</h3>
+                    <p id="patientsCount">0</p>
+                </div>
+                <div class="box">
+                    <h3>Visitors Today</h3>
+                    <p id="visitorsCount">0</p>
+                </div>
+                <div class="box">
+                    <h3>Appointments</h3>
+                    <p id="Appointmentscount">0</p>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    
+
+    <section class="forms">
+        <div class="container">
+            <div class="forms-grid">   
+                <!-- Add doctor -->
+                <div class="register" id="add doctor">
+                    <span class="fas fa-user-circle"></span>
+                    <strong>Add doctor</strong>
+                    <form action="#" method="post" class="register-form">
+                        <fieldset>
+                            <div class="form">
+                                <div class="form-row">
+                                    <span class="fas fa-user"></span>
+                                    <label class="form-label" for="input">First Name</label>
+                                    <input type="text" class="form-text" required>
+                                </div>
+                                <div class="form-row">
+                                    <span class="fas fa-user"></span>
+                                    <label class="form-label" for="input">Last Name</label>
+                                    <input type="text" class="form-text" required>
+                                </div>
+                                <div class="form-row">
+                                    <span class="fas fa-envelope"></span>
+                                    <label class="form-label" for="input">Email</label>
+                                    <input type="email" class="form-text" required>
+                                </div>
+                                <div class="form-row">
+                                    <span class="fas fa-envelope"></span>
+                                    <label class="form-label" for="input">Phone</label>
+                                    <input type="Phone" class="form-text" required>
+                                </div>  
+                                <div class="form-row" id="Birthday">
+                                    <label class="form-label" for="input">Birthday</label>
+                                    <input type="date" class="form-text" required>
+                                </div>
+                                <div class="form-row">
+                                    <select id="Departement" name="Departement" class="form-select" required>
+                                        <option  value="null">Departement</option>
+                                        <option value="Radiology">Radiology</option>
+                                        <option value="Surgery">Surgery</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <select id="Gender" name="Gender" class="form-select" required>
+                                        <option  value="null">Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="form-row button-login">
+                                    <button class="btn btn-login">Add <span class="fas fa-arrow-right"></span></button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+               
+           
+                    <!-- doctors -->
+                    <section id="Doctors" class="Doctors">
+                        <div class="container">
+                            <div class="table-responsive">
+                                <table class="table table-striped custom-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Doctor Id</th>
+                                            <th scope="col">Doctor</th>
+                                            <th scope="col">Departement</th>
+                                            <th scope="col">Edit Info</th>
+                                            <th scope="col">Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr scope="row">
+                                            <td>1392</td>
+                                            <td>James Yates</a></td>
+                                            <td>Radiology</td>
+                                            <td><a href="#">Edit</a></td>
+                                            <td><button class="btn btn-remove">Remove</button></td>
+                                        </tr>
+                                        <tr scope="row">
+                                            <td>1392</td>
+                                            <td>James Yates</a></td>
+                                            <td>Radiology</td>
+                                            <td><a href="#">Edit</a></td>
+                                            <td class="Remove"><button class="btn btn-remove">Remove</button></td>
+                                        </tr>
+                                        <tr scope="row">
+                                            <td>1392</td>
+                                            <td>James Yates</a></td>
+                                            <td>Radiology</td>
+                                            <td><a href="#">Edit</a></td>
+                                            <td><button class="btn btn-remove">Remove</button></td>
+                                        </tr>
+                                        <tr scope="row">
+                                            <td>1392</td>
+                                            <td>James Yates</a></td>
+                                            <td>Radiology</td>
+                                            <td><a href="#">Edit</a></td>
+                                            <td><button class="btn btn-remove">Remove</button></td>
+                                        </tr>
+                                        <tr scope="row">
+                                            <td>1392</td>
+                                            <td>James Yates</a></td>
+                                            <td>Radiology</td>
+                                            <td><a href="#">Edit</a></td>
+                                            <td><button class="btn btn-remove">Remove</button></td>
+                                        </tr>
+                                        <tr scope="row">
+                                            <td>1392</td>
+                                            <td>James Yates</a></td>
+                                            <td>Radiology</td>
+                                            <td><a href="#">Edit</a></td>
+                                            <td><button class="btn btn-remove">Remove</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section> 
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+
+
+</html>
