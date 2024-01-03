@@ -38,14 +38,20 @@ CREATE TABLE Patient (
     birthdate DATE
 );
 
-CREATE TABLE Scan (
-    scan_id SERIAL PRIMARY KEY,
-    doctor_id INT REFERENCES Doctor(ID),
-    price int,
-    machine VARCHAR(100)  NOT NULL,
-    category VARCHAR(100)  NOT NULL,
-    Scan_date DATE,
-    photo VARCHAR(100)
+CREATE TABLE Scan
+(
+    scan_id       serial
+        primary key,
+    doctor_id     integer constraint patient_id___fk references patient,
+    price         integer,
+    machine       varchar(100) not null,
+    category      varchar(100) not null,
+    report        varchar(100),
+    date          date,
+    patient_notes varchar(100),
+    patient_id    integer constraint patient_id___fk references patient,
+    time          varchar(100) not null
+
 );
 
 CREATE TABLE Surgery (

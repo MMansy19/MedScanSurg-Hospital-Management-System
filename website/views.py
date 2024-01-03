@@ -60,11 +60,11 @@ def create_patient(username, name, email, password, birthdate):
 # Utility function to authenticate a user and render the appropriate template
 def authenticate_user(user_type, username, password):
     if user_type == 'patient':
-                cursor.execute('SELECT password FROM patient WHERE user_name = %s', (username,))
-                password = cursor.fetchone()
-                if password is not None:
-                    if password == password:
-                        return render_template('patient.html')
+                cursor.execute('SELECT * FROM patient WHERE user_name = %s', (username,))
+                patient = cursor.fetchone()
+                if patient[4] is not None:
+                    if patient[4] == password:
+                     return redirect(url_for('views.patient',patient_id = patient[0]))
 
     elif user_type == 'doctor':
         cursor.execute('SELECT * FROM doctor WHERE user_name = %s', (username,))
@@ -138,7 +138,17 @@ def login():
 
 @views.route('/doctor/<int:doctor_id>', methods=['GET', 'POST'])
 def doctor(doctor_id):
+    database_session.rollback()
+    # Fetch the doctor's information for rendering the form
+    cursor.execute('SELECT * FROM doctor WHERE ID = %s', (doctor_id,))
+    doctor = cursor.fetchone()
+    
+    cursor.execute('SELECT * FROM Scan')
+    scans = cursor.fetchall()
+
     if request.method == 'POST':
+    
+        full_name = request.form.get('full_name')
         full_name = request.form.get('full_name')
         working_hours = int(request.form.get('working_hours')) if request.form.get('working_hours') else 0
         salary = int(request.form.get('salary')) if request.form.get('salary') else 0
@@ -146,48 +156,106 @@ def doctor(doctor_id):
         address = request.form.get('address')
         specialty = request.form.get('specialty')
         gender = request.form.get('gender')
-        
+
+        new_photo = request.files.get('photo')
+        photo = save_picture(new_photo)
+                
         # Update the doctor's profile in the database
         cursor.execute('''
             UPDATE doctor
             SET full_name = %s, working_hours = %s, salary = %s, phone = %s, address = %s,
-                specialty = %s, gender = %s
+                specialty = %s, gender = %s, photo = %s
             WHERE ID = %s
-        ''', (full_name, working_hours, salary, phone, address, specialty, gender, doctor_id))
+        ''', (full_name, working_hours, salary, phone, address, specialty, gender, photo, doctor_id))
         database_session.commit()
         
-        # Fetch the scans from the form
-        scan_price = int(request.form.get('scan_price')) if request.form.get('scan_price') else 0
-        scan_machine = request.form.get('scan_machine')
-        scan_category = request.form.get('scan_category')
-        new_scan_photo = request.files.get('photo')
-        scan_photo = save_scan(new_scan_photo)
         
+       # Fetch the scans from the form
+        price = int(request.form.get('price')) if request.form.get('price') else 0
+        new_scan_photo = request.files.get('report')
+        scan_photo = save_scan(new_scan_photo)
+                
         cursor.execute('''
-            INSERT INTO Scan (doctor_id, price, machine, category, photo)
-            VALUES (%s, %s, %s, %s, %s)
-        ''', (doctor_id, scan_price, scan_machine, scan_category, scan_photo))
+            UPDATE Scan
+            SET price = %s, report = %s, doctor_id = %s
+            WHERE scan_id = %s
+        ''', (price, scan_photo, doctor_id ,scans[1][0] ))
         database_session.commit()
 
         return redirect(url_for('views.doctor', doctor_id=doctor_id))
-
-    # Rollback the current transaction
-    database_session.rollback()
     
-    # Fetch the doctor's information for rendering the form
-    cursor.execute('SELECT * FROM doctor WHERE ID = %s', (doctor_id,))
-    doctor = cursor.fetchone()
-    
-    cursor.execute('SELECT * FROM Scan WHERE doctor_id = %s', (doctor_id,))
-    scans = cursor.fetchall()
 
+    # if doctor[10] == 'Radiology':
+    #     return render_template('Radiologydoctor.html', doctor=doctor, scans=scans)
+    # elif doctor[10] == 'Radiology':
+    #     return render_template('Surgerydoctor.html', doctor=doctor, scans=scans)
+ 
     return render_template('doctor.html', doctor=doctor, scans=scans)
 
-@views.route('/patient')
-def patient():
-    return render_template('patient.html')
+@views.route('/scan_detail/<int:scan_id>')
+def scan_detail(scan_id):
+    cursor.execute('SELECT * FROM scan WHERE scan_id = %s', (scan_id,))
+    scan = cursor.fetchone()
 
-@views.route('/admin', methods=['GET', 'POST'])
+    return render_template('scan_detail.html', scan_id=scan_id, scan=scan)
+
+@views.route('/patient/<int:patient_id>', methods=['GET', 'POST'])
+def patient(patient_id):
+    message=None
+    if  request.method == 'POST':
+        scan_type = request.form.get('scanType')
+        print(scan_type)
+        test_type = request.form.get('testType')
+        appointment_date = request.form.get('appointmentDate')
+        additional_notes = request.form.get('additionalNotes')
+        hour_minute1 = request.form.get('appointmentHour')
+        book_scan(scan_type,test_type,appointment_date,additional_notes,patient_id,hour_minute1)
+      
+        surgery_type = request.form.get('SurgeryType')
+        doctor_name = request.form.get('DoctorName')
+        date = request.form.get('appointmentDate2')
+        hour_minute = request.form.get('appointmentHour')
+        patient_notes = request.form.get('additionalNotes2')
+        print(hour_minute)
+        message=book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,patient_id)
+    cursor.execute('SELECT * FROM patient WHERE ID = %s', (patient_id,))
+    patient = cursor.fetchone()
+    cursor.execute('SELECT * FROM surgery WHERE patient_id = %s', (patient_id,))
+    surgerys=cursor.fetchall()
+    cursor.execute('SELECT * FROM scan WHERE patient_id = %s', (patient_id,))
+    scans=cursor.fetchall()
+    return render_template('patient.html',patient=patient,surgerys=surgerys,scans=scans,msg=message)
+
+def book_scan(scan_type,test_type,appointment_date,additional_notes,patient_id,time):
+    if  scan_type :
+        appointment_day=(appointment_date.split('-')[-1])
+        appointment_month=(appointment_date.split('-')[-2])
+        appointment_year=(appointment_date.split('-')[-3])
+        cursor.execute('INSERT INTO scan(machine,category,date,patient_notes,patient_id,time) VALUES (%s, %s,%s,%s,%s,%s)',(scan_type,test_type,appointment_date,additional_notes,patient_id,time) )
+        database_session.commit()
+        
+def book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,patient_id):
+    message=None
+    if surgery_type:
+        cursor.execute('SELECT id FROM doctor WHERE full_name = %s', (doctor_name,))
+        id=cursor.fetchall()
+        print(id)
+        print(doctor_name)
+        hour=int(hour_minute.split(':')[0])
+        print(hour)
+        if hour<=16 and hour>=8:
+            if not id:              ##untill doctor is linked to patient then remove not
+                cursor.execute('INSERT INTO surgery(type,date,hour_minute,additional_notes,patient_id,doctor_name) VALUES (%s, %s,%s,%s,%s,%s)',(surgery_type,date,hour_minute,additional_notes,patient_id,doctor_name) )
+                database_session.commit()   
+                message='Surgery is successfuly registered with'+' '+doctor_name
+                return message
+            else:  
+                print('doctor id is none')
+        else:
+            print('hour is out of range')
+            message= doctor_name+' '+ 'is busy at this time'
+            return message
+
 def admin():
 
     if request.method == 'POST':
@@ -252,5 +320,4 @@ def delete_doctor(doctor_id):
     cursor.execute('DELETE FROM doctor WHERE id = %s', (doctor_id,))
     database_session.commit()
     return redirect(url_for('views.admin'))
-
 

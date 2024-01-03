@@ -9,53 +9,13 @@
   --sticky-height: 40px;
 }
 
-section {
-  margin: 2em;
-}
-
-form {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  text-align: center;
-  color: #333;
-}
-
-label {
-  display: block;
-  margin: 10px 0 5px;
-  font-weight: bold;
-  color: #333;
-}
-
-input,
-textarea,
-select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 14px;
-}
-
 body {
   background: var(--body-bg);
   overflow-x: hidden;
-  font-family: "Open Sans", sans-serif;
-  color: #333;
 }
 
 .wrapper {
   padding: 15px;
-  margin: 10em auto 30em;
   max-width: 1080px;
 }
 
@@ -65,9 +25,6 @@ h1 {
   line-height: 1;
   color: #333;
   font-family: "Courgette", cursive;
-}
-h2 {
-  text-align: center;
 }
 
 .sticky-header {
@@ -310,6 +267,7 @@ p + p {
 }
 
 button {
+  border-radius: 0;
   border: 0;
   padding: 5px;
   font: inherit;
@@ -319,13 +277,6 @@ button {
   outline: none !important;
   cursor: pointer;
   background: var(--thead-bg);
-  color: #fff;
-  padding: 10px 15px;
-  border-radius: 4px;
-}
-
-button:hover {
-  background-color: #45a049;
 }
 
 button > svg {
@@ -354,17 +305,21 @@ button > svg {
   }
 }
 
-#edit {
-  display: inline-block;
-  background-color: #63b366;
-  color: #fff;
-  padding: 10px 15px;
-  text-decoration: none;
-  border-radius: 4px;
-  font-size: 16px;
-  transition: background-color 0.3s;
+#doctorbanner {
+  background: url("../image/doctorbanner.jpg") no-repeat fixed;
+  background-size: cover;
+  min-height: 650px;
+  position: relative;
 }
-
-a:hover {
-  background-color: #0a4b0d;
+#appointments {
+  margin-top: 50px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#Calendar {
+  margin-top: 50px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
