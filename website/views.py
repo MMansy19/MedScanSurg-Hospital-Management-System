@@ -186,6 +186,7 @@ def doctor(doctor_id):
 
 @views.route('/patient/<int:patient_id>', methods=['GET', 'POST'])
 def patient(patient_id):
+    message=None
     if  request.method == 'POST':
         scan_type = request.form.get('scanType')
         print(scan_type)
@@ -200,14 +201,14 @@ def patient(patient_id):
         hour_minute = request.form.get('appointmentHour')
         patient_notes = request.form.get('additionalNotes2')
         print(hour_minute)
-        book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,patient_id)
+        message=book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,patient_id)
     cursor.execute('SELECT * FROM patient WHERE ID = %s', (patient_id,))
     patient = cursor.fetchone()
     cursor.execute('SELECT * FROM surgery WHERE patient_id = %s', (patient_id,))
     surgerys=cursor.fetchall()
     cursor.execute('SELECT * FROM scan WHERE patient_id = %s', (patient_id,))
     scans=cursor.fetchall()
-    return render_template('patient.html',patient=patient,surgerys=surgerys,scans=scans)
+    return render_template('patient.html',patient=patient,surgerys=surgerys,scans=scans,msg=message)
 
 
 def book_scan(scan_type,test_type,appointment_date,additional_notes,patient_id,time):
@@ -219,6 +220,7 @@ def book_scan(scan_type,test_type,appointment_date,additional_notes,patient_id,t
         database_session.commit()
         
 def book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,patient_id):
+    message=None
     if surgery_type:
         cursor.execute('SELECT id FROM doctor WHERE full_name = %s', (doctor_name,))
         id=cursor.fetchall()
@@ -230,10 +232,15 @@ def book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,pati
             if not id:              ##untill doctor is linked to patient then remove not
                 cursor.execute('INSERT INTO surgery(type,date,hour_minute,additional_notes,patient_id,doctor_name) VALUES (%s, %s,%s,%s,%s,%s)',(surgery_type,date,hour_minute,additional_notes,patient_id,doctor_name) )
                 database_session.commit()   
+                message='Surgery is successfuly registered with'+' '+doctor_name
+                return message
             else:  
                 print('doctor id is none')
         else:
             print('hour is out of range')
+            message= doctor_name+' '+ 'is busy at this time'
+            return message
+
 @views.route('/admin', methods=['GET', 'POST'])
 def admin():
 

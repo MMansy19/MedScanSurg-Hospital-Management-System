@@ -240,6 +240,9 @@
       <form action="{{ url_for('views.patient', patient_id=patient[0]) }}" method="post" class="booking-form">
         <div class="form-row">
           <h2>Book a Surgery</h2>
+          {% if msg %}
+          <div class="alert alert-warning">{{ msg }}</div>
+          {% endif %}
           <label for="Surgery">Surgery Type:</label>
           <select id="SurgeryType" name="SurgeryType" class="form-select" required onchange="updateDoctors()" >
 
@@ -257,6 +260,7 @@
       </div>
       
       <div class="form-row" id="DoctorSelect" style="display: none;">
+       
         <label for="DoctorName">Pick Doctor:</label>
         <select id="DoctorName" name="DoctorName" class="form-select" required onchange="updateDoctors()">
         </select>
