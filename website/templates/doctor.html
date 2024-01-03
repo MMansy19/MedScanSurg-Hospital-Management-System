@@ -82,84 +82,37 @@
       </div>
     </section>
 
-    <section>
-      <br /><br />
+    <br />
+    <h3>Dr. {{ doctor[5] }}</h3>
+    <h3>Working Hours: {{ doctor[6] }} hours</h3>
 
-      <form
-        method="POST"
-        action="{{ url_for('views.doctor', doctor_id=doctor[0]) }}"
-        enctype="multipart/form-data"
-      >
-        <h2>Doctor Profile</h2>
-        <br /><br />
-        <a
-          id="edit"
-          href="{{ url_for('views.edit_doctor', doctor_id=doctor[0]) }}"
-          target="_blank"
-          >Edit Profile</a
-        >
-
-        <br />
-        <!-- Existing doctor information fields -->
-        <h3>{{ doctor[5] }}</h3>
-        <h3>Working Hours: {{ doctor[6] }}</h3>
-
-        <!-- Add other fields for doctor information -->
-
-        <!-- New fields for scan information -->
-        <h3>Scans</h3>
-        <label for="scan_price">Scan Price:</label>
-        <input
-          type="number"
-          id="scan_price"
-          name="scan_price"
-          min="0"
-          required
-        />
-
-        <label for="scan_machine">Scan Machine:</label>
-        <select
-          id="scan_machine"
-          name="scan_machine"
-          class="form-select"
-          required
-          onchange="updateTestTypes()"
-        >
-          <option value="mri">MRI Scanner</option>
-          <option value="ct">CT Scanner</option>
-          <option value="ultrasound">Ultrasound Machine</option>
-          <option value="xray">X-ray Machine</option>
-          <option value="petct">PET-CT Scanner</option>
-        </select>
-
-        <label for="scan_category">Scan Category:</label>
-        <select
-          id="scan_category"
-          name="scan_category"
-          class="form-select"
-          required
-          onchange="updateTestTypes()"
-        >
-          <option value="brain">Brain Scan</option>
-          <option value="abdomen">Abdomen Scan</option>
-          <option value="cardiac">Cardiac Scan</option>
-          <option value="orthopedic">Orthopedic Scan</option>
-          <option value="oncology">Oncology Scan</option>
-        </select>
-        <label for="photo">Scan Report Image:</label>
-        <br />
-        <input type="file" name="photo" />
-
-        <button type="submit">Submit</button>
-      </form>
+    <h2>Scans:</h2>
+    <form
+      method="POST"
+      action="{{ url_for('views.doctor', doctor_id=doctor[0]) }}"
+      enctype="multipart/form-data"
+    >
       <ul>
-        {%for scan in scans%}
         <li>
-          <img src="\static\scans\{{ scan[5] }}" alt="Scan Photo""
+          <img <img src="\static\scans\{{ scan[5] }}" alt="Scan Photo""
           style="max-width: 300px; max-height: 300px" />
+
+          <label for="price">Scan Price:</label>
+          <input type="number" id="price" name="price" min="0" required />
+
+          <p>Scan Machine: {{ scan[3] }}</p>
+          <p>Scan Category: {{ scan[4] }}</p>
+          <p>Date: {{ scan[6] }}</p>
+          <p>Time: {{ scan[9] }}</p>
+          <label for="report">Scan Report Image:</label>
+          <br />
+          <input type="file" name="report" />
         </li>
-        {% endfor %}
+        <button type="submit">Submit</button>
       </ul>
+    </form>
+
+    <section>
       <svg style="position: absolute; width: 0; height: 0; display: none">
         <symbol id="icon-arrow" viewBox="0 0 96 96">
           <title>Arrow</title>
