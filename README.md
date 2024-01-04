@@ -1,23 +1,13 @@
-# Radiology Department Database Project 🌐💻
+# 𝐌𝐞𝐝𝐒𝐜𝐚𝐧𝐒𝐮𝐫𝐠 𝐂𝐨𝐧𝐧𝐞𝐜𝐭 🌐💻
+-MedScanSurg Connect streamlines and empowers patients, providing a user-friendly portal for scheduling scans, radiology appointments, and surgeries, fostering efficient healthcare access and choices.
+-This project is a Flask-based web application for managing a Radiology Department database. It allows users to login as patients, doctors, or administrators, schedule appointments, and manage user profiles.
 
-This project is a Flask-based web application for managing a Radiology Department database. It allows users to login as patients, doctors, or administrators, schedule appointments, and manage user profiles.
+## 🎥 Video Presentation
+[![Radiology Department Database Project Presentation](./images/video_thumbnail.png)](https://drive.google.com/file/d/1XUMfUSOsbVn4jWmsddq0c2hgfBW1Q-fT/view?usp=sharing)
 
 ## Project Overview
-
 **MedRad Connect** is a comprehensive full-stack web application designed to cater to the unique needs of the Radiology Department. Developed using front-end technologies such as HTML, CSS, and JS, coupled with the Python Flask web micro framework, this project aims to provide a dynamic and responsive system. The application seamlessly integrates essential features of a Hospital Information System (HIS), specifically tailored for the Radiology Department.
 
-## Table of Contents
-
-- [Radiology Department Database Project 🌐💻](#radiology-department-database-project-)
-  - [Project Overview](#project-overview)
-  - [Table of Contents](#table-of-contents)
-  - [Running the Flask App](#-running-the-flask-app)
-  - [Project Structure](#-project-structure)
-  - [Editing a Doctor's Profile](#-editing-a-doctors-profile)
-  - [Adding a New Doctor](#-adding-a-new-doctor)
-  - [Managing Appointments](#-managing-appointments)
-  - [Contact](#-contact)
-  - [Video Presentation](#-video-presentation)
 
 ## 🚀 Running the Flask App
 
@@ -95,6 +85,3 @@ Patients can schedule appointments by visiting the `/appointments/<patient_id>` 
 
 For inquiries or issues, please contact [Mahmoud Mansy] at [mmansy@egmail.com].
 
-## 🎥 Video Presentation
-
-[![Radiology Department Database Project Presentation](./images/video_thumbnail.png)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
