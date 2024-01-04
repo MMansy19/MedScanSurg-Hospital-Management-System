@@ -12,15 +12,15 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
 
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-...." crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-...." crossorigin="anonymous" />
 
 
 </head>
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
   <!--banner-->
-  <section id="banner" class="banner">
+  <section id="indexbanner" class="banner">
     <div class="bg-color">
       <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -54,7 +54,7 @@
             <div class="banner-text text-center">
               <h1 class="white">Nurturing Health, Inspiring Hope</h1>
               <p>Discover a new era of healthcare at SHC Hospital,<br> where innovation meets compassion.</p>
-    <a href="{{ url_for('views.login') }}" class="btn btn-appoint">Make an Appointment</a>
+              <a href="{{ url_for('views.login') }}" class="btn btn-appoint">Make an Appointment.</a>
             </div>
             <div class="overlay-detail text-center">
               <a href="#service"><i class="fa fa-angle-down"></i></a>
@@ -151,6 +151,7 @@
     </div>
   </section>
   <!--cta-->
+  
   <!--Doctors-->
 
   <!--doctor team-->
@@ -163,10 +164,9 @@
         </div>
         <div class="col-md-3 col-sm-3 col-xs-6">
           <div class="thumbnail">
-            
             <img src="{{ url_for('static', filename='image/doctor1.jpg') }}" alt="..." class="team-img">
             <div class="caption">
-              <h3>Jessica Wally</h3>
+              <h3>Shaun Morphy</h3>
               <p>Doctor</p>
               <ul class="list-inline">
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -194,7 +194,7 @@
           <div class="thumbnail">
             <img src="{{ url_for('static', filename='image/doctor3.jpg') }}" alt="..." class="team-img">
             <div class="caption">
-              <h3>Amanda Denyl</h3>
+              <h3> Morgan Reznick</h3>
               <p>Radiologist</p>
               <ul class="list-inline">
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -208,7 +208,7 @@
           <div class="thumbnail">
             <img src="{{ url_for('static', filename='image/doctor4.jpg') }}" alt="..." class="team-img">
             <div class="caption">
-              <h3>Jason Davis</h3>
+              <h3>Claire Brown</h3>
               <p>Doctor</p>
               <ul class="list-inline">
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -287,60 +287,58 @@
     </div>
   </section>
   <!--cta-->
-  <!--contact-->
-  <section id="contact" class="section-padding">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h2 class="ser-title">Contact us</h2>
-          <hr class="botm-line">
-        </div>
-        <div class="col-md-4 col-sm-4">
-          <h3>Contact Info</h3>
-          <div class="space"></div>
-          <p><i class="fa fa-map-marker fa-fw pull-left fa-2x"></i>Builind 18 Engineering Campus<br> Giza , Gz 17022</p>
-          <div class="space"></div>
-          <p><i class="fa fa-envelope-o fa-fw pull-left fa-2x"></i>info@SHC.com</p>
-          <div class="space"></div>
-          <p><i class="fa fa-phone fa-fw pull-left fa-2x"></i>+1 800 123 1234</p>
-        </div>
-        <div class="col-md-8 col-sm-8 marb20">
-          <div class="contact-info">
-            <h3 class="cnt-ttl">Having Any Query! Or A Complaint?</h3>
+    <!--contact-->
+    <section id="contact" class="section-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="ser-title">Contact us</h2>
+            <hr class="botm-line">
+          </div>
+          <div class="col-md-4 col-sm-4">
+            <h3>Contact Info</h3>
             <div class="space"></div>
-            <div id="sendmessage">Your message has been sent. Thank you!</div>
-            <div id="errormessage"></div>
-            <form action="" method="post" role="form" class="contactForm">
-              <div class="form-group">
-                <input type="text" name="name" class="form-control br-radius-zero" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                <div class="validation"></div>
-              </div>
-              <div class="form-group">
-                <input type="email" class="form-control br-radius-zero" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                <div class="validation"></div>
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control br-radius-zero" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                <div class="validation"></div>
-              </div>
-              <div class="form-group">
-                <textarea class="form-control br-radius-zero" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-                <div class="validation"></div>
-              </div>
-
-              <div class="form-action">
-                <button type="submit" class="btn btn-form">Send Message</button>
-              </div>
-            </form>
+            <p><i class="fa fa-map-marker fa-fw pull-left fa-2x"></i>Builind 18 Engineering Campus<br> Giza , Gz 17022</p>
+            <div class="space"></div>
+            <p><i class="fa fa-envelope-o fa-fw pull-left fa-2x"></i>info@SHC.com</p>
+            <div class="space"></div>
+            <p><i class="fa fa-phone fa-fw pull-left fa-2x"></i>+1 800 123 1234</p>
+          </div>
+          <div class="col-md-8 col-sm-8 marb20">
+            <div class="contact-info">
+              <h3 class="cnt-ttl">Having Any Query! Or A Complaint?</h3>
+              <div class="space"></div>
+              <div id="sendmessage">Your message has been sent. Thank you!</div>
+              <div id="errormessage"></div>
+              <form action="" method="post" role="form" class="contactForm">
+                <div class="form-group">
+                  <input type="text" name="name" class="form-control br-radius-zero" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control br-radius-zero" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control br-radius-zero" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control br-radius-zero" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                  <div class="validation"></div>
+                </div>
+  
+                <div class="form-action">
+                  <button type="submit" class="btn btn-form">Send Message</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-  
-  <!--/ contact-->
-
-
+    </section>
+    
+    <!--/ contact-->
 
   <footer id="footer">
     <div class="top-footer">
@@ -360,9 +358,9 @@
             </div>
             <div class="info-sec">
               <ul class="quick-info">
-                <li><a href="index.html"><i class="fa fa-circle"></i>Home</a></li>
+                <li><a href="#banner"><i class="fa fa-circle"></i>Home</a></li>
                 <li><a href="#service"><i class="fa fa-circle"></i>Service</a></li>
-                <li><a href="#contact"><i class="fa fa-circle"></i>Appointment</a></li>
+                <li><a href="{{ url_for('views.login') }}"><i class="fa fa-circle"></i>Appointment</a></li>
               </ul>
             </div>
           </div>
@@ -379,6 +377,7 @@
   <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
   <script src="{{ url_for('static', filename='contactform/contactform.js') }}"></script>
 
+</body>
 </body>
 
 </html>

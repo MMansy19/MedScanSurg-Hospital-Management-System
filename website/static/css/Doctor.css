@@ -307,7 +307,7 @@ button > svg {
 }
 
 #doctorbanner {
-  background: url("../image/doctorbanner.jpg") no-repeat fixed;
+  background: url("../image/bg-banner.jpg") no-repeat fixed;
   background-size: cover;
   min-height: 650px;
   position: relative;

@@ -64,10 +64,11 @@ def save_scan(form_picture):
         return 'default.jpg'
 
 # Utility function to create a new patient
-def create_patient(ssn,username, name, email, password, birthdate):
+def create_patient(ssn,username, name, email, password, birthdate,photo):
     database_session.rollback()
     birthdate = datetime.strptime(birthdate, '%Y-%m-%d').date()
-    cursor.execute('INSERT INTO patient (ssn,user_name, full_name, email, password, birthdate) VALUES (%s, %s, %s, %s, %s, %s)', (ssn,username, name, email, password, birthdate))
+    photo: save_picture(photo)
+    cursor.execute('INSERT INTO patient (ssn,user_name, full_name, email, password, birthdate, photo) VALUES (%s, %s, %s, %s, %s, %s, %s)', (ssn,username, name, email, password, birthdate,photo))
     database_session.commit()
 # Utility function to authenticate a user and render the appropriate template
 def authenticate_user(user_type, username, password):
@@ -223,12 +224,12 @@ def update_doctor_profile(doctor_id, data):
     cursor.execute('''
         UPDATE doctor
         SET full_name = %s, working_hours = %s, salary = %s, phone = %s, address = %s,
-             photo = %s, start_work = %s, end_work = %s
+             photo = %s, start_work = %s, end_work = %s, department = %s
         WHERE ID = %s
     ''', (
         data['full_name'], data['working_hours'], data['salary'],
         data['phone'][:11] if data['phone'] else '', data['address'],
-          data['photo'], data['start_work'], data['end_work'], doctor_id
+          data['photo'], data['start_work'], data['end_work'],data['depar   tment'], doctor_id
     ))
     database_session.commit()
 
@@ -242,13 +243,20 @@ def update_scan(doctor_id, data):
 
 def delete_doctor(doctor_id):
     database_session.rollback()
+    msg=None
 
     # Delete scans associated with the doctor
-    cursor.execute('DELETE FROM scan WHERE doctor_id = %s', (doctor_id,))
-
+    cursor.execute('SELECT full_name FROM doctor WHERE id = %s', (doctor_id,))
+    full_name=cursor.fetchone()
+    cursor.execute('SELECT FROM scan WHERE doctor_id = %s', (doctor_id,))
+    scan=cursor.fetchone()
     # Delete surgeries associated with the doctor
-    cursor.execute('DELETE FROM surgery WHERE doctor_id = %s', (doctor_id,))
-
+    cursor.execute('SELECT FROM surgery WHERE doctor_id = %s', (doctor_id,))
+    surgery=cursor.fetchone()
+    print(surgery)
+    if len(scan)==0 or len(surgery)==0:
+        msg=f"Can't Delete Dr.{full_name} as He  has Assigned to patient"
+        return msg
     # Delete the doctor
     cursor.execute('DELETE FROM doctor WHERE id = %s', (doctor_id,))
 

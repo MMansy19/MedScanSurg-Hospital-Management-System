@@ -128,46 +128,50 @@
                 <div class="form">
                   <div class="form-row">
                     <span class="fas fa-user"></span>
-                    <label class="form-label" for="input">SSN</label>
-                    <input type="text" class="form-text" name="ssn" required />
+                    <label class="form-label" for="input"></label>
+                    <input type="text" class="form-text" name="ssn" required placeholder="SSN" />
                   </div>
                   <div class="form-row">
                     <span class="fas fa-user"></span>
-                    <label class="form-label" for="input">Username</label>
+                    <label class="form-label" for="input"></label>
                     <input
                       type="text"
                       class="form-text"
                       name="user_name"
                       required
+                      placeholder="Username"
                     />
                   </div>
                   <div class="form-row">
                     <span class="fas fa-envelope"></span>
-                    <label class="form-label" for="input">Email</label>
+                    <label class="form-label" for="input"></label>
                     <input
                       type="email"
                       class="form-text"
                       name="email"
                       required
+                      placeholder="Email"
                     />
                   </div>
                   <div class="form-row">
                     <span class="fas fa-envelope"></span>
-                    <label class="form-label" for="input">Password</label>
+                    <label class="form-label" for="input"></label>
                     <input
                       type="password"
                       class="form-text"
                       name="password"
                       required
+                      placeholder="password"
                     />
                   </div>
                   <div class="form-row">
-                    <label class="form-label" for="input">Fullname</label>
+                    <label class="form-label" for="input"></label>
                     <input
                       type="text"
                       class="form-text"
                       name="full_name"
                       required
+                      placeholder="Full Name"
                     />
                   </div>
                   <div class="form-row">
@@ -176,6 +180,7 @@
                       name="department"
                       class="form-select"
                       required
+                      placeholder="Departement"
                     >
                       <option value="null">Departement</option>
                       <option value="Radiology">Radiology</option>
@@ -222,6 +227,9 @@
               <div class="container">
                 <div class="table-responsive">
                   <table class="table table-striped custom-table">
+                    {% if msg %}
+                    <div class="alert alert-warning">{{ msg}}</div>
+                    {% endif %}
                     <thead>
                       <tr>
                         <th scope="col">Doctor Id</th>

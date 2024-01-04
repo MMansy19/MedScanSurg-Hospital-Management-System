@@ -9,14 +9,16 @@ def index():
 
 @views.route('/login', methods=['GET', 'POST'])
 def login():
+    
     database_session.rollback()
     if request.method == 'POST':
         check_create = 'create' in request.form
         check_sign = 'sign' in request.form
+        photo: save_picture(request.files.get('photo'))
 
         if check_create:
             create_patient(request.form['ssn'], request.form['username1'], request.form['fullname'],
-                            request.form['email'], request.form['password1'], request.form['birthdate'])
+                            request.form['email'], request.form['password1'], request.form['birthdate'], request.form['photo'])
             return render_template('login.html')
      
         elif check_sign:
@@ -117,7 +119,7 @@ def get_doctors():
     return jsonify(filtered_doctors)
 
 @views.route('/admin', methods=['GET', 'POST'])
-def admin():
+def admin(msg=None):
     database_session.rollback()
     if request.method == 'POST':
         create_doctor({
@@ -143,7 +145,7 @@ def admin():
 
     app_count = len(scans) + len(surgeries)
 
-    return render_template('admin2.html', doctors=doctors, doctors_count=doctors_count, patient_count=patients_count, app_count=app_count)
+    return render_template('admin2.html', doctors=doctors, doctors_count=doctors_count, patient_count=patients_count, app_count=app_count,msg=msg)
 
 @views.route('/edit_doctor/<int:doctor_id>', methods=['GET', 'POST'])
 def edit_doctor(doctor_id):
@@ -159,6 +161,7 @@ def edit_doctor(doctor_id):
             'address': request.form.get('address'),
             'start_work': request.form.get('start'),
             'end_work': request.form.get('end'),
+            'department': request.form.get('department'),
             'photo': save_picture(request.files.get('photo'))
         }
 

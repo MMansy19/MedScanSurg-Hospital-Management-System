@@ -68,6 +68,12 @@
   <section id="radiology" class="section-padding">
     <div class="container">
       <form action="{{ url_for('views.patient', patient_id=patient[0]) }}" method="post" class="booking-form">
+        <img
+        
+              src="\static\profile_pics\{{ patient[7] }}"
+              alt=" Photo"
+              class="profile-image"
+              />
         <div class="form-row">
           <h2>what are you waiting for {{patient[3]}}</h2>
           <h2>Book a Scan </h2>
