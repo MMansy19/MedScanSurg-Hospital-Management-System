@@ -65,13 +65,12 @@
         </div>
       </div>
     </section>
-    <!--/ banner-->
-        
+    
     <!-- Appointments Section -->
-                      <!-- Appointments Section -->
-
-  <div class="container">
-    <div class="profile-container">
+    <!-- Appointments Section -->
+    
+    <div class="container">
+      <div class="profile-container">
         <div class="profile-info">
           <h3>Dr. {{ doctor[5] }}</h3>
           <h3>Working Hours: {{ doctor[6] }} hours</h3>
@@ -84,18 +83,20 @@
         alt="{{ doctor[5] }}'s Photo"
         class="profile-image"
         />
-    </div>
-
-    <form method="POST" action="{{ url_for('views.doctor', doctor_id=doctor[0]) }}" enctype="multipart/form-data">
-
-    <section class="section-padding">
+      </div>
       
-      <div id="appointments" class="container">
-        <h2>Surgery Appointments</h2>
-      </br>
-        <div class="table-responsive">
-          <table class="table table-striped custom-table">
-            <thead>
+      
+      <section class="section-padding">
+        <form method="POST" action="{{ url_for('views.doctor', doctor_id=doctor[0]) }}" enctype="multipart/form-data">
+          
+          <div id="appointments" class="container">
+            <h2>Surgery Appointments</h2>
+          </br>
+          <div class="table-responsive">
+          
+      
+            <table class="table table-striped custom-table">
+              <thead>
               <tr>
                 <th scope="col">Surgery ID</th>
                 <th scope="col">Patient ID</th>
@@ -106,8 +107,10 @@
                 <th scope="col">Patient Info</th>
               </tr>
             </thead>
+          </form>
+
             <tbody>
-              {% for surgery in surgeries %}
+              {% for surgery in surgerys %}
               <tr>
                 <td>{{ surgery[0] }}</td>
                 <td>{{ surgery[2] }}</td>
@@ -123,10 +126,10 @@
               
             </tbody>
           </table>
-        </form>
+          
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
  
   <section  class="section-padding">
     <div id="Calendar" class="container">
@@ -136,7 +139,7 @@
       <title>Arrow</title>
       <path d="M39.66,13.34A8,8,0,0,0,28.34,24.66L51.69,48,28.34,71.34A8,8,0,0,0,39.66,82.66l29-29a8,8,0,0,0,0-11.31Z"/>
     </symbol>
-  </svg>
+   </svg>
   
   <div class="wrapper">
     <div class="sticky-header">

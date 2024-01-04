@@ -116,10 +116,11 @@
             <table class="table table-striped custom-table">
               <thead>
                 <tr>
-                  <th scope="col">Appointment Id</th>
+                  <th scope="col"> ID</th>
                   <th scope="col">Date</th>
-                  <th scope="col">time</th>
-                  <th scope="col">Scan Type</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Scan Machine</th>
+                  <th scope="col">Scan Category</th>
                   <th scope="col">Scan</th>
                 </tr>
               </thead>
@@ -130,6 +131,7 @@
                   <td>{{ scan[6] }}</td>
                   <td>{{ scan[9 ] }}</td>
                   <td>{{ scan[3] }}</td>
+                  <td>{{ scan[4] }}</td>
                   <td>              <a
                     href="{{ url_for('views.scan_detail', scan_id=scan[0]) }}"
                     target="_blank">View</a>
@@ -137,36 +139,6 @@
                   
                 </tr>
                 {% endfor %}
-                <!-- <tr>
-                  <td>4616</td>
-                  <td>12/3/2014</td>
-                  <td>2:00 pm</td>
-                  <td><a href="#">View</a></td>
-                </tr>
-                <tr>
-                  <td>9841</td>
-                  <td>12/3/2014</td>
-                  <td>2:00 pm</td>
-                  <td><a href="#" class="more">View</a></td>
-                </tr>
-                <tr>
-                  <td>9548</td>
-                  <td>12/3/2014</td>
-                  <td>2:00 pm</td>
-                  <td><a href="#" class="more">View</a></td>
-                </tr>
-                <tr>
-                  <td>4616</td>
-                  <td>12/3/2014</td>
-                  <td>2:00 pm</td>
-                  <td><a href="#" class="more">View</a></td>
-                </tr>
-                <tr>
-                  <td>9841</td>
-                  <td>12/3/2014</td>
-                  <td>2:00 pm</td>
-                  <td><a href="#" class="more">View</a></td>
-                </tr> -->
               </tbody>
             </table>
           </div>
@@ -303,9 +275,11 @@
           <table class="table table-striped custom-table">
             <thead>
               <tr>
-                <th scope="col">Appointment Id</th>
+                <th scope="col">ID</th>
+                <th scope="col">Type</th>
                 <th scope="col">Date</th>
                 <th scope="col">Time</th>
+                <th scope="col">Additional Information</th>
                 <th scope="col">Doctor</th>
               </tr>
             </thead>
@@ -313,41 +287,15 @@
               {% for surgery in surgerys %}
               <tr scope="row">
                 <td>{{ surgery[0] }}</td>
+                <td>{{ surgery[3] }}</td>
                 <td>{{ surgery[4] }}</td>
+                <td>{{ surgery[6] }}</td>
                 <td>{{ surgery[8] }}</td>
                 <td>{{ surgery[9] }}</td>
               </tr>
               {% endfor %}
-              <!-- <tr>
-                <td>4616</td>
-                <td>12/3/2014</td>
-                <td>2:00 pm</td>
-                <td><a>Dr.Safwat</a></td>
-              </tr>
-              <tr>
-                <td>9841</td>
-                <td>12/3/2014</td>
-                <td>2:00 pm</td>
-                <td><a>Dr.Safwat</a></td>
-              </tr>
-              <tr>
-                <td>9548</td>
-                <td>12/3/2014</td>
-                <td>2:00 pm</td>
-                <td><a>Dr.Safwat</a></td>
-              </tr>
-              <tr>
-                <td>4616</td>
-                <td>12/3/2014</td>
-                <td>2:00 pm</td>
-                <td><a>Dr.Safwat</a></td>
-              </tr>
-              <tr>
-                <td>9841</td>
-                <td>12/3/2014</td>
-                <td>2:00 pm</td>
-                <td><a>Dr.Safwat</a></td>
-              </tr> -->
+  
+              </tr> 
             </tbody>
           </table>
         </div>

@@ -37,8 +37,8 @@ def doctor(doctor_id):
     doctor = get_doctor_by_id(doctor_id)
     scans = get_scans_by_doctor_id(doctor_id)
     scans2 = get_unassigned_scans()
-    surgeries =get_surgeries_by_doctor_id(doctor_id)
-   
+    cursor.execute('SELECT * FROM surgery WHERE doctor_id = %s', (doctor_id,))
+    surgerys=cursor.fetchall()   
     if request.method == 'POST':
 
         scan_data = {
@@ -55,7 +55,7 @@ def doctor(doctor_id):
         return render_template('Radiologydoctor.html', doctor=doctor, scans=scans, scans2=scans2)
     if doctor['department'] == 'Surgery':
         return render_template('Surgerydoctor.html', doctor=doctor, scans=scans, scans2=scans2)
-    return render_template('Radiologydoctor.html', doctor=doctor, surgeries=surgeries)
+    return render_template('Radiologydoctor.html', doctor=doctor, surgerys=surgerys)
 
 @views.route('/scan_detail/<int:scan_id>')
 def scan_detail(scan_id):
