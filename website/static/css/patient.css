@@ -1,0 +1,144 @@
+#patientbanner {
+  background: url("../image/patient.png") no-repeat fixed;
+  background-size: cover;
+  min-height: 650px;
+  position: relative;
+}
+
+/***************************************
+/***************************************/
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+.schedule-tab {
+  background-color: #0cb8b6;
+  float: left;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+#radiology {
+  padding: 50px 0;
+  text-align: center;
+}
+
+.booking-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.booking-form h2 {
+  color: #333;
+  margin-top: 30px;
+}
+
+.form-row {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button.btn-submit {
+  background-color: #0080ff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.btn-submit:hover {
+  background-color: #0099ff;
+}
+
+h2 {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+#appointments {
+  margin-top: 30px;
+
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+tr {
+  border: 1px solid #000000;
+}
+.images {
+  width: 60%;
+  height: 100px;
+}
+.ser-title {
+  text-align: left;
+}
+#first_column {
+  border-right: 1px solid #291c1c;
+  padding-right: 6px;
+}
+#secondcolumn {
+  padding-right: 40px;
+  /* Default styles for larger screens */
+}
+.image-row-container {
+  display: flex;
+  align-items: center;
+}
+
+.image-row-container img {
+  width: 140px; /* Adjust the width as needed */
+  height: 140px; /* Adjust the height as needed */
+  margin-right: 10px; /* Adjust the spacing between images */
+}
+
+.image-row-container p {
+  color: #000000;
+  text-align: center;
+}
+
+.doctor-container {
+  text-align: center; /* Optional: Center align the content */
+  margin-right: 100px; /* Adjust the spacing between doctors */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .image-row-container {
+    flex-wrap: wrap; /* Allow images to wrap to the next line on smaller screens */
+    justify-content: center; /* Center align images on smaller screens */
+  }
+
+  .image-row-container img {
+    width: 100%; /* Make images fill the container width */
+    margin-right: 0; /* Remove margin between images on smaller screens */
+    margin-bottom: 10px; /* Add some spacing between rows */
+  }
+
+  .doctor-container {
+    margin-right: 0; /* Adjust the spacing between doctors on smaller screens */
+  }
+}

@@ -1,0 +1,122 @@
+<!-- edit_doctor.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Doctor</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h2 {
+        color: #333;
+      }
+
+      form {
+        max-width: 400px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Edit Doctor</h2>
+    <form
+      method="POST"
+      action="{{ url_for('views.edit_doctor', doctor_id=doctor[0]) }}"
+      enctype="multipart/form-data"
+    >
+      <label for="full_name">Full Name:</label>
+      <input
+        type="text"
+        name="full_name"
+        value="{{ doctor[5] }}"
+        required
+      /><br />
+      <label for="working_hours">Working Hours:</label>
+      <input
+        type="number"
+        name="working_hours"
+        value="{{ doctor[6] }}"
+        required
+      /><br />
+
+      <label for="salary">Salary:</label>
+      <input
+        type="number"
+        name="salary"
+        value="{{ doctor[7] }}"
+        required
+      /><br />
+      <label for="salary">Start time:</label>
+      <input
+        type="number"
+        name="start"
+        value="{{ doctor[14] }}"
+        required
+      /><br />
+      <label for="salary">End time:</label>
+      <input type="number" name="end" value="{{ doctor[15] }}" required /><br />
+
+      <label for="phone">Phone:</label>
+      <input type="text" name="phone" value="{{ doctor[8] }}" required /><br />
+
+      <label for="address">Address:</label>
+      <input
+        type="text"
+        name="address"
+        value="{{ doctor[9] }}"
+        required
+      /><br />
+
+      <label for="photo">Update Profile Picture:</label>
+      <input type="file" name="photo" accept="image/*" /><br />
+
+      <img
+        src="\static\profile_pics\{{ doctor[12] }}"
+        alt="{{ doctor[5] }}'s Photo"
+        style="max-width: 100px; max-height: 100px"
+      />
+
+      <button type="submit">Save Changes</button>
+    </form>
+  </body>
+</html>

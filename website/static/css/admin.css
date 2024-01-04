@@ -1,0 +1,112 @@
+/* Add this CSS to your existing styles or create a new CSS file */
+
+#loggedin-counts {
+  padding: 20px 0;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.box {
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow */
+  padding: 20px;
+  border-radius: 8px; /* Add border-radius for rounded corners */
+  background-color: #ffffff;
+  width: 200px;
+}
+
+.box h3 {
+  margin-bottom: 10px;
+  color: #495057;
+}
+
+.box p {
+  font-size: 24px;
+  font-weight: bold;
+  color: rgba(12, 184, 182);
+}
+
+.table-responsive {
+  width: 900px;
+}
+
+.Doctors th {
+  text-align: center;
+  width: 15px;
+}
+
+.Stats {
+  background-color: #fff; /* Add a background color to the stats section */
+  padding: 60px 0;
+}
+
+.box {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  width: 200px;
+  text-align: center;
+  margin-bottom: 20px; /* Add some margin between boxes */
+}
+
+.box h3 {
+  margin-bottom: 10px;
+  color: #495057;
+}
+
+.box p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0cb8b6; /* Update the color of the count text */
+}
+/* Add this CSS to your existing styles or create a new CSS file */
+
+#loggedin-count {
+  padding: 20px 0;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.box {
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  width: 200px;
+  margin-bottom: 20px; /* Add some margin between boxes */
+}
+
+.box h3 {
+  margin-bottom: 10px;
+  color: #495057;
+}
+
+.box p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0cb8b6; /* Update the color of the count text */
+}
+
+.table-responsive {
+  width: 100%; /* Make the table responsive */
+}
+
+.Doctors th {
+  text-align: center;
+  width: auto; /* Allow the column width to adjust based on content */
+}
+
+.Stats {
+  background-color: #fff;
+  padding: 60px 0;
+}
+
+/* Add more styles as needed */
