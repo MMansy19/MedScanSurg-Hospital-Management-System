@@ -130,7 +130,11 @@
                   <td>{{ scan[6] }}</td>
                   <td>{{ scan[9 ] }}</td>
                   <td>{{ scan[3] }}</td>
-                  <td>{{ scan[5] }}</td>
+                  <td>              <a
+                    href="{{ url_for('views.scan_detail', scan_id=scan[0]) }}"
+                    target="_blank">View</a>
+                  </td>
+                  
                 </tr>
                 {% endfor %}
                 <!-- <tr>

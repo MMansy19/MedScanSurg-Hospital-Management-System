@@ -79,6 +79,9 @@
     <br />
     <h3>Dr. {{ doctor[5] }}</h3>
     <h3>Working Hours: {{ doctor[6] }} hours</h3>
+    <h3>Working from: {{ doctor[14] }} to {{ doctor[15] }}</h3>
+    <h3>Salary: {{ doctor[7] }} $</h3>
+    <h3>Department: {{ doctor[13] }} </h3>
 
     <form method="POST" action="{{ url_for('views.doctor', doctor_id=doctor[0]) }}" enctype="multipart/form-data">
       <table class="table">
@@ -143,8 +146,8 @@
                     target="_blank">View</a>
                   </td>
                   <td>
-  <a href="{{ url_for('views.view_patient_info', patient_id=scan[8]) }}">View</a>
-</td>
+                  <a href="{{ url_for('views.view_patient_info', patient_id=scan[8]) }}">View</a>
+                  </td>
 
               </tr>
               {% endfor %}
