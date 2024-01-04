@@ -214,6 +214,10 @@ def get_scans_by_doctor_id(doctor_id):
     cursor.execute('SELECT * FROM Scan WHERE doctor_id = %s', (doctor_id,))
     return cursor.fetchall()
 
+def get_surgeries_by_doctor_id(doctor_id):
+    cursor.execute('SELECT * FROM Surgery WHERE doctor_id = %s', (doctor_id,))
+    return cursor.fetchall()
+
 def get_unassigned_scans():
     cursor.execute('SELECT * FROM Scan WHERE doctor_id IS NULL')
     return cursor.fetchall()

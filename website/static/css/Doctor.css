@@ -380,3 +380,25 @@ button {
 button:hover {
   background-color: #0056b3;
 }
+.profile-container {
+  display: flex;
+  align-items: center;
+}
+
+.profile-info {
+  margin-right: 20px; /* Adjust the margin as needed */
+}
+
+.profile-info h3 {
+  margin: 0;
+}
+
+.profile-image {
+  max-width: 200px;
+  max-height: 250px;
+  margin-left: 400px; /* Adjust the margin as needed */
+}
+
+img {
+  display: block; /* Remove default image spacing */
+}

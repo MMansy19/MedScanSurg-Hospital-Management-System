@@ -67,6 +67,7 @@
     </section>
         
     <form
+
         method="POST"
         action="{{ url_for('views.doctor', doctor_id=doctor[0]) }}"
         enctype="multipart/form-data"
@@ -74,16 +75,27 @@
        
 
                       <!-- Appointments Section -->
-
   <div class="container">
-    <br />
-    <h3>Dr. {{ doctor[5] }}</h3>
-    <h3>Working Hours: {{ doctor[6] }} hours</h3>
-    <h3>Working from: {{ doctor[14] }} to {{ doctor[15] }}</h3>
-    <h3>Salary: {{ doctor[7] }} $</h3>
-    <h3>Department: {{ doctor[13] }} </h3>
 
-    <form method="POST" action="{{ url_for('views.doctor', doctor_id=doctor[0]) }}" enctype="multipart/form-data">
+    <div class="profile-container">
+        <div class="profile-info">
+            <h3>Dr. {{ doctor[5] }}</h3>
+            <h3>Working Hours: {{ doctor[6] }} hours</h3>
+            <h3>Working from: {{ doctor[14] }} to {{ doctor[15] }}</h3>
+            <h3>Salary: {{ doctor[7] }} $</h3>
+            <h3>Department: {{ doctor[13] }}</h3>
+        </div>
+        <img
+        src="\static\profile_pics\{{ doctor[12] }}"
+        alt="{{ doctor[5] }}'s Photo"
+        class="profile-image"
+        />
+      </div>
+
+      <form method="POST" action="{{ url_for('views.doctor', doctor_id=doctor[0]) }}" enctype="multipart/form-data">
+      <div id="appointments" class="container">
+        <h2>UNASSIGNED Appointments </h2>
+      </br>
       <table class="table">
         <thead>
           <tr>
@@ -110,13 +122,13 @@
           {% endfor %}
         </tbody>
       </table>
-
+    </div>
       
     <section class="section-padding">
       
       <div id="appointments" class="container">
-        <h2>Radiology Appointments</h2>
-        
+        <h2> Assigned Appointments </h2>
+          </br>
         <div class="table-responsive">
           <table class="table table-striped custom-table">
             <thead>
@@ -154,10 +166,10 @@
               
             </tbody>
           </table>
-        </form>
         </div>
       </div>
     </section>
+  </form>
 
       <svg style="position: absolute; width: 0; height: 0; display: none;">
     <symbol id="icon-arrow" viewBox="0 0 96 96">

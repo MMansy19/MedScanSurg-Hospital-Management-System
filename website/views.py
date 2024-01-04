@@ -33,10 +33,12 @@ def login():
 @views.route('/doctor/<int:doctor_id>', methods=['GET', 'POST'])
 def doctor(doctor_id):
     database_session.rollback()
+  
     doctor = get_doctor_by_id(doctor_id)
     scans = get_scans_by_doctor_id(doctor_id)
     scans2 = get_unassigned_scans()
-
+    surgeries =get_surgeries_by_doctor_id(doctor_id)
+   
     if request.method == 'POST':
 
         scan_data = {
@@ -49,11 +51,11 @@ def doctor(doctor_id):
 
         return redirect(url_for('views.doctor', doctor_id=doctor_id))
         
-    if doctor[10] == 'Radiology':
+    if doctor['department'] == 'Radiology':
         return render_template('Radiologydoctor.html', doctor=doctor, scans=scans, scans2=scans2)
-    if doctor[10] == 'Surgery':
+    if doctor['department'] == 'Surgery':
         return render_template('Surgerydoctor.html', doctor=doctor, scans=scans, scans2=scans2)
-    return render_template('Radiologydoctor.html', doctor=doctor, scans=scans, scans2=scans2)
+    return render_template('Radiologydoctor.html', doctor=doctor, surgeries=surgeries)
 
 @views.route('/scan_detail/<int:scan_id>')
 def scan_detail(scan_id):

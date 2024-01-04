@@ -71,76 +71,53 @@
                       <!-- Appointments Section -->
 
   <div class="container">
-    <br />
-    <h3>Dr. {{ doctor[5] }}</h3>
-    <h3>Working Hours: {{ doctor[6] }} hours</h3>
+    <div class="profile-container">
+        <div class="profile-info">
+          <h3>Dr. {{ doctor[5] }}</h3>
+          <h3>Working Hours: {{ doctor[6] }} hours</h3>
+          <h3>Working from: {{ doctor[14] }} to {{ doctor[15] }}</h3>
+          <h3>Salary: {{ doctor[7] }} $</h3>
+          <h3>Department: {{ doctor[13] }}</h3>
+        </div>
+        <img
+        src="\static\profile_pics\{{ doctor[12] }}"
+        alt="{{ doctor[5] }}'s Photo"
+        class="profile-image"
+        />
+    </div>
 
     <form method="POST" action="{{ url_for('views.doctor', doctor_id=doctor[0]) }}" enctype="multipart/form-data">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Scan Price</th>
-            <th>Upload Scan Image</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for scan in scans2 %}
-            <tr>
-              <td>
-                <label for="price">Scan Price:</label>
-                <input type="number" id="price" name="price" min="0" required />
-              </td>
-              <td>
-                <input type="file" name="report" />
-                <input type="hidden" name="scan_id" value="{{ scan[0] }}" /> <!-- Add this line -->
-              </td>
-              <td>
-                <button type="submit">Submit</button>
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
 
-      
     <section class="section-padding">
       
       <div id="appointments" class="container">
-        <h2>Radiology Appointments</h2>
-        
+        <h2>Surgery Appointments</h2>
+      </br>
         <div class="table-responsive">
           <table class="table table-striped custom-table">
             <thead>
               <tr>
-                <th scope="col">Scan ID</th>
+                <th scope="col">Surgery ID</th>
+                <th scope="col">Patient ID</th>
+                <th scope="col">Type</th>
                 <th scope="col">Date</th>
-                <th scope="col">Time</th>
-                <th scope="col">Scan Machine</th>
-                <th scope="col">Scan Category</th>
-                <th scope="col">Scan Price</th>
-                <th scope="col">Scan Image</th>
+                <th scope="col">Hour</th>
+                <th scope="col">Additional Information</th>
                 <th scope="col">Patient Info</th>
               </tr>
             </thead>
             <tbody>
-              {% for scan in scans %}
+              {% for surgery in surgeries %}
               <tr>
-                <td>{{ scan[0] }}</td>
-                <td>{{ scan[6] }}</td>
-                <td>{{ scan[9] }}</td>
-                <td>{{ scan[3] }}</td>
-                <td>{{ scan[4] }}</td>
-                <td>{{ scan[2] }}$</td>
-                <td>
-                  <a
-                    href="{{ url_for('views.scan_detail', scan_id=scan[0]) }}"
-                    target="_blank">View</a>
-                  </td>
+                <td>{{ surgery[0] }}</td>
+                <td>{{ surgery[2] }}</td>
+                <td>{{ surgery[3] }}</td>
+                <td>{{ surgery[4] }}</td>
+                <td>{{ surgery[6] }}</td>
+                <td>{{ surgery[8] }}</td>
                   <td>
-  <a href="{{ url_for('views.view_patient_info', patient_id=scan[8]) }}">View</a>
-</td>
-
+                    <a href="{{ url_for('views.view_patient_info', patient_id=scan[8]) }}">View</a>
+                  </td>
               </tr>
               {% endfor %}
               
