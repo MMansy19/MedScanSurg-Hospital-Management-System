@@ -30,9 +30,35 @@
         height: auto;
         display: block;
       }
-    </style>
-  </head>
 
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .caption {
+        font-size: 18px;
+        color: #666;
+        margin-top: 10px;
+      }
+
+      .back-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 20px;
+        transition: background-color 0.3s ease;
+      }
+
+      .back-link:hover {
+        background-color: #0056b3;
+      }
+    </style>
+    <h1>Scan Image Viewer</h1>
+  </head>
   <body>
     <div class="image-container">
       <img src="\static\scans\{{ scan[5] }}" alt="Scan Photo" />

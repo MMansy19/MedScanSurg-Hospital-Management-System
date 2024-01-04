@@ -131,15 +131,13 @@
       </section>
     </div>
  
-  <section  class="section-padding">
-    <div id="Calendar" class="container">
-
-      <svg style="position: absolute; width: 0; height: 0; display: none;">
+<section>
+  <svg style="position: absolute; width: 0; height: 0; display: none;">
     <symbol id="icon-arrow" viewBox="0 0 96 96">
       <title>Arrow</title>
       <path d="M39.66,13.34A8,8,0,0,0,28.34,24.66L51.69,48,28.34,71.34A8,8,0,0,0,39.66,82.66l29-29a8,8,0,0,0,0-11.31Z"/>
     </symbol>
-   </svg>
+  </svg>
   
   <div class="wrapper">
     <div class="sticky-header">
@@ -307,7 +305,7 @@
           s
         </div>
         <div class="track purple">
-  
+          
           <div class="entry">
             <div class="details">
               <h3>Lorem ipsum dolor sit.</h3>
@@ -392,41 +390,6 @@
   </div>
   <div id="top-of-site-pixel-anchor"></div>
 </section>
-
-    <!-- Appointments Section -->
-    <section  class="section-padding">
-      <div id="appointments" class="container">
-        <h2>Surgery Appointments</h2>
-        <div class="table-responsive">
-          <table class="table table-striped custom-table">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Type</th>
-                <th scope="col">Date</th>
-                <th scope="col">Time</th>
-                <th scope="col">Additional Information</th>
-                <th scope="col">Doctor</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for surgery in surgerys %}
-              <tr scope="row">
-                <td>{{ surgery[0] }}</td>
-                <td>{{ surgery[3] }}</td>
-                <td>{{ surgery[4] }}</td>
-                <td>{{ surgery[6] }}</td>
-                <td>{{ surgery[8] }}</td>
-                <td>{{ surgery[9] }}</td>
-              </tr>
-              {% endfor %}
-  
-              </tr> 
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
 
 <footer id="footer">
   <div class="top-footer">

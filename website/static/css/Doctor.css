@@ -12,11 +12,12 @@
 body {
   background: var(--body-bg);
   overflow-x: hidden;
+  margin: 0; /* Reset default body margin */
 }
 
 .wrapper {
   padding: 15px;
-  max-width: 1080px;
+  max-width: 1500px;
 }
 
 h1 {
@@ -322,6 +323,7 @@ button > svg {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 .modal {
   display: none;
@@ -360,7 +362,7 @@ button > svg {
 /* Add your existing CSS styles here */
 
 .container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -386,7 +388,7 @@ button:hover {
 }
 
 .profile-info {
-  margin-right: 20px; /* Adjust the margin as needed */
+  margin-right: 20px;
 }
 
 .profile-info h3 {
@@ -396,7 +398,7 @@ button:hover {
 .profile-image {
   max-width: 200px;
   max-height: 250px;
-  margin-left: 400px; /* Adjust the margin as needed */
+  margin-left: 500px; /* Adjust the margin as needed */
 }
 
 img {
