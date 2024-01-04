@@ -54,8 +54,9 @@ def doctor(doctor_id):
     if doctor['department'] == 'Radiology':
         return render_template('Radiologydoctor.html', doctor=doctor, scans=scans, scans2=scans2)
     if doctor['department'] == 'Surgery':
-        return render_template('Surgerydoctor.html', doctor=doctor, scans=scans, scans2=scans2)
-    return render_template('Radiologydoctor.html', doctor=doctor, surgerys=surgerys)
+        return render_template('Surgerydoctor.html', doctor=doctor,surgerys=surgerys)
+    
+    return render_template('Radiologydoctor.html', doctor=doctor, scans=scans, scans2=scans2)
 
 @views.route('/scan_detail/<int:scan_id>')
 def scan_detail(scan_id):

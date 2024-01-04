@@ -119,7 +119,7 @@
                 <td>{{ surgery[6] }}</td>
                 <td>{{ surgery[8] }}</td>
                   <td>
-                    <a href="{{ url_for('views.view_patient_info', patient_id=scan[8]) }}">View</a>
+                    <a href="{{ url_for('views.view_patient_info', patient_id=surgery[2]) }}">View</a>
                   </td>
               </tr>
               {% endfor %}
@@ -392,6 +392,41 @@
   </div>
   <div id="top-of-site-pixel-anchor"></div>
 </section>
+
+    <!-- Appointments Section -->
+    <section  class="section-padding">
+      <div id="appointments" class="container">
+        <h2>Surgery Appointments</h2>
+        <div class="table-responsive">
+          <table class="table table-striped custom-table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Type</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+                <th scope="col">Additional Information</th>
+                <th scope="col">Doctor</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for surgery in surgerys %}
+              <tr scope="row">
+                <td>{{ surgery[0] }}</td>
+                <td>{{ surgery[3] }}</td>
+                <td>{{ surgery[4] }}</td>
+                <td>{{ surgery[6] }}</td>
+                <td>{{ surgery[8] }}</td>
+                <td>{{ surgery[9] }}</td>
+              </tr>
+              {% endfor %}
+  
+              </tr> 
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
 
 <footer id="footer">
   <div class="top-footer">
