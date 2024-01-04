@@ -10,7 +10,7 @@ database_session = psycopg2.connect(
     port=5432,
     host='localhost',
     user='postgres',
-    password= 'root1234'
+    password= '132003'
 )
 cursor = database_session.cursor(cursor_factory=psycopg2.extras.DictCursor)
 

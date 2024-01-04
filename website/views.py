@@ -110,7 +110,7 @@ def get_doctors():
     doctors_data = cursor.fetchall()
 
     surgery_type = request.form.get('SurgeryType')
-    filtered_doctors = [doctor for doctor in doctors_data if doctor[11] == surgery_type]
+    filtered_doctors = [doctor for doctor in doctors_data if doctor[10] == surgery_type]
     return jsonify(filtered_doctors)
 
 @views.route('/admin', methods=['GET', 'POST'])
