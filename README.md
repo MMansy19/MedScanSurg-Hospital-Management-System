@@ -2,8 +2,7 @@
 -MedScanSurg Connect streamlines and empowers patients, providing a user-friendly portal for scheduling scans, radiology appointments, and surgeries, fostering efficient healthcare access and choices.
 -This project is a Flask-based web application for managing a Radiology Department database. It allows users to login as patients, doctors, or administrators, schedule appointments, and manage user profiles.
 
-## 🎥 Video Presentation(https://drive.google.com/file/d/1XUMfUSOsbVn4jWmsddq0c2hgfBW1Q-fT/view?usp=sharing)
-[Click here!]
+## 🎥 [Video Presentation](https://drive.google.com/file/d/1XUMfUSOsbVn4jWmsddq0c2hgfBW1Q-fT/view?usp=sharing)
 
 ## Project Overview
 **MedRad Connect** is a comprehensive full-stack web application designed to cater to the unique needs of the Radiology Department. Developed using front-end technologies such as HTML, CSS, and JS, coupled with the Python Flask web micro framework, this project aims to provide a dynamic and responsive system. The application seamlessly integrates essential features of a Hospital Information System (HIS), specifically tailored for the Radiology Department.
