@@ -6,7 +6,7 @@
 
 
 ## Table of Contents
-1. [MedScanSurg Connect Overview](#medscansurg-connect-)
+1. [Project Overview](#project-overview)
 2. [Project Structure](#project-structure)
 3. [Routes and Functions](#routes-and-functions)
 4. [Additional Functions](#additional-functions)
@@ -25,7 +25,7 @@
 ![Entity Relationship Model](Planning/ER_model.jpg)
 
 
-## 📂 Project Structure
+## Project Structure
 
 - `website`: Contains the main Flask application.
   - `__init__.py`: Initializes the Flask app.
@@ -51,7 +51,7 @@
 - `database.db`: SQLite database file.
 
 
-## 📝 Routes and Functions
+## Routes and Functions
 
 1. **🏠 Home Page:**
     - Route: `/`
@@ -123,7 +123,7 @@ Patients can choose a surgery doctor by visiting the `/choose_surgery_doctor` ro
 
 
 
-## 🚀 Running the Flask App
+## Running the Flask App
 
 1. Open a terminal and navigate to the project directory:
 
@@ -155,7 +155,7 @@ Patients can choose a surgery doctor by visiting the `/choose_surgery_doctor` ro
    python app.py
    ```
    
-## 🛠️ How to Contribute
+## How to Contribute
 
 1. Fork the repository.
 2. Clone the forked repository to your local machine.
@@ -164,7 +164,7 @@ Patients can choose a surgery doctor by visiting the `/choose_surgery_doctor` ro
 5. Push the changes to your fork: `git push origin feature/your-feature-name` or `git push origin bugfix/your-bugfix-name`.
 6. Create a pull request in the original repository.
 
-## 📧 Contact
+## Contact
 
 For inquiries or issues, please contact [Mahmoud Mansy] at [mmansy@egmail.com].
 
