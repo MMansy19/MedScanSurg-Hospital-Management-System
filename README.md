@@ -1,11 +1,22 @@
 # 𝐌𝐞𝐝𝐒𝐜𝐚𝐧𝐒𝐮𝐫𝐠 𝐂𝐨𝐧𝐧𝐞𝐜𝐭 🌐💻
 
-MedScanSurg Connect streamlines and empowers patients, providing a user-friendly portal for scheduling scans, radiology appointments, and surgeries, fostering efficient healthcare access and choices. This project is a Flask-based web application for managing a Radiology Department database. It allows users to login as patients, doctors, or administrators, schedule appointments, and manage user profiles.
+**MedScanSurg Connect** streamlines and empowers patients, providing a user-friendly portal for scheduling scans, radiology & surgery appointments, and surgeries, fostering efficient healthcare access and choices. This project is a Flask-based web application for managing a Radiology & Surgery Department database. It allows users to login as patients, doctors, or administrators, schedule appointments, and manage user profiles.
 
 ## 🎥 [Watch the Demo Video](https://drive.google.com/file/d/1XUMfUSOsbVn4jWmsddq0c2hgfBW1Q-fT/view?usp=sharing)
 
+
+## Table of Contents
+1. [MedScanSurg Connect Overview](#medscansurg-connect-)
+2. [Project Structure](#project-structure)
+3. [Routes and Functions](#routes-and-functions)
+4. [Additional Functions](#additional-functions)
+5. [Running the Flask App](#running-the-flask-app)
+6. [How to Contribute](#how-to-contribute)
+7. [Contact](#contact)
+
+
 ## Project Overview
-**MedRad Connect** is a comprehensive full-stack web application designed to cater to the unique needs of the Radiology Department. Developed using front-end technologies such as HTML, CSS, and JS, coupled with the Python Flask web micro framework, this project aims to provide a dynamic and responsive system. The application seamlessly integrates essential features of a Hospital Information System (HIS), specifically tailored for the Radiology Department.
+**MedScanSurg Connect** is a comprehensive full-stack web application designed to cater to the unique needs of the Radiology & Surgery Department. Developed using front-end technologies such as HTML, CSS, and JS, coupled with the Python Flask web micro framework, this project aims to provide a dynamic and responsive system. The application seamlessly integrates essential features of a Hospital Information System (HIS), specifically tailored for the Radiology & Surgery Department.
 
 ## Planning
 ![Project Planning](Planning/Planning.jpeg)
@@ -38,6 +49,7 @@ MedScanSurg Connect streamlines and empowers patients, providing a user-friendly
 - `instance`: Contains instance-specific configuration files.
 
 - `database.db`: SQLite database file.
+
 
 ## 📝 Routes and Functions
 
@@ -82,6 +94,7 @@ MedScanSurg Connect streamlines and empowers patients, providing a user-friendly
     - Function: `delete_doctor_route`
 
 
+
 ## Additional Functions
 
 1. ### ✏️ Editing a Doctor's Profile
@@ -107,6 +120,7 @@ To view detailed information about a patient, go to the `/view_patient_info/<pat
 6. ### 🏥 Choosing a Surgery Doctor
 
 Patients can choose a surgery doctor by visiting the `/choose_surgery_doctor` route. Select a doctor and schedule surgery appointments.
+
 
 
 ## 🚀 Running the Flask App
