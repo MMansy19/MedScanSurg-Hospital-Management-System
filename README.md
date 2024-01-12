@@ -17,7 +17,8 @@
 
 ## Project Overview
 **MedScanSurg Connect** is a comprehensive full-stack web application designed to cater to the unique needs of the Radiology & Surgery Department. Developed using front-end technologies such as HTML, CSS, and JS, coupled with the Python Flask web micro framework, this project aims to provide a dynamic and responsive system. The application seamlessly integrates essential features of a Hospital Information System (HIS), specifically tailored for the Radiology & Surgery Department.
-![Project Planning](Planning/project-1.jpeg)
+
+## ![Project Planning](Planning/project-1.jpeg)
 
 ## Planning
 ![Project Planning](Planning/Planning.jpeg)
