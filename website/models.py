@@ -200,8 +200,7 @@ def book_surgery(surgery_type,doctor_name,date,hour_minute,additional_notes,pati
             else:
                 message= 'Dr is only available between ' +str(start_work)+' and '+str(end_work)
                 return message
-            
-                
+                           
 def get_doctor_by_id(doctor_id):
     database_session.rollback()
     cursor.execute('SELECT * FROM doctor WHERE ID = %s', (doctor_id,))
@@ -214,7 +213,6 @@ def get_patient_by_id(patient_id):
 def get_scans_by_doctor_id(doctor_id):
     cursor.execute('SELECT * FROM Scan WHERE doctor_id = %s', (doctor_id,))
     return cursor.fetchall()
-
 
 def get_unassigned_scans():
     cursor.execute('SELECT * FROM Scan WHERE doctor_id IS NULL')
@@ -229,7 +227,7 @@ def update_doctor_profile(doctor_id, data):
     ''', (
         data['full_name'], data['working_hours'], data['salary'],
         data['phone'][:11] if data['phone'] else '', data['address'],
-          data['photo'], data['start_work'], data['end_work'],data['depar   tment'], doctor_id
+          data['photo'], data['start_work'], data['end_work'],data['department'], doctor_id
     ))
     database_session.commit()
 
